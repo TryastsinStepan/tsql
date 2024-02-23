@@ -127,7 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="datatypes.c" />
     <ClCompile Include="hashtable.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>

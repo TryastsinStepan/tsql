@@ -365,3 +365,17 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+bin/
+obj/
+*.vcxproj
+*.vcxproj.filters
+
+# Git files
+.gitignore
+.gitattributes

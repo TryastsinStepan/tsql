@@ -1,4 +1,5 @@
 #include "hashtable.h"
+
 i32_t hash_function(ptr key) {
 	return 1;
 }

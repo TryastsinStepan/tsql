@@ -74,6 +74,10 @@ StyleCopReport.xml
 *_p.c
 *_h.h
 *.ilk
+*.vcxproj
+*.vcxproj.filters
+*.getignore
+*.gitattributes
 *.meta
 *.obj
 *.iobj

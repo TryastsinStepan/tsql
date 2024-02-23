@@ -1,45 +1,44 @@
 #include <stdlib.h>   
 #include <stdio.h>
 #include <malloc.h>
-
+#include "tofdata.h"
 typedef struct HashTable {
-	void* key;
-	void* value;
+	ptr key;
+	ptr value;
 }HashTable;
-void hashfunction(void* key);
-HashTable** addelem(void* value);
-HashTable** allocmemory(int size);
-HashTable* createbuck(void* key,void* value);
-void freemem(void* memory);
+void hashfunction(ptr key);
+HashTable* allocmemory(int size);
+void createbuck(ptr key, ptr value);
+void freemem(ptr memory);
 int main(void)
 {
-	HashTable** hTable= allocmemory(10);
+	HashTable* hTable= allocmemory(10);
 	if (hTable == NULL) {
 		printf("Error: Unable to allocate memory.\n");
-		return 1; 
+		exit(0);
 	}
-	hTable[0] = createbuck();
+	//createbuck(1,"Hello", hTable);
 	freemem(hTable);
 	return 0;
 }
 
-void hashfunction(void* key)
+void hashfunction(ptr key)
 {
 
 }
 
-HashTable** addelem(void* value)
+HashTable** addelem(ptr value)
 {
 	return NULL;
 }
 
-HashTable** allocmemory(int size)
+HashTable* allocmemory(int size)
 {
 	if (size < 0) {
 		printf("Error: Invalid size for memory allocation (%d)\n", size);
 		return NULL;
 	}
-	void** memory = (HashTable**)malloc(sizeof(HashTable) * size);
+	ptr memory = (HashTable*)malloc(sizeof(HashTable) * size);
 	if (!memory) {
 		printf("Error: Failed to allocate memory\n");
 		return NULL;
@@ -47,12 +46,13 @@ HashTable** allocmemory(int size)
 	return memory;
 }
 
-HashTable* createbuck(void* key, void* value)
+void createbuck(ptr key, ptr value)
 {
-	return nullptr;
+
+	return ;
 }
 
-void freemem(void* memory)
+void freemem(ptr memory)
 {
 	free(memory);
 	return;

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include < string.h>
-#include  "tofdata.h"
+#include  "utils.h"
 typedef struct Item {
 	ptr key;
 	ptr value;
@@ -12,6 +12,7 @@ typedef struct Item {
 typedef struct HashTable {
 	Item** item;
 	i32_t size;
+	i32_t count;
 
 }HashTable;
 

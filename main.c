@@ -8,6 +8,6 @@ int main(void)
 		exit(0);
 	}
 	createbuck(1,"Hello", hTable);
-	
+	printhashtable(hTable);
 	return 0;
 }

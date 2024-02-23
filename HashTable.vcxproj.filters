@@ -21,12 +21,18 @@
     <ClCompile Include="hashtable.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="datatypes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tofdata.h">
+    <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hashtable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="datatypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,6 +16,7 @@ HashTable* allocmemorytable(int size)
 		return NULL;
 	}
 	memory_table->size = size;
+	memory_table->count = 0;
 	memory_table->item = (Item**)calloc(size, sizeof(Item));
 	if (!memory_table->item) {
 		printf("Error: Failed to allocate memory\n");
@@ -39,7 +40,12 @@ Item* allocmemoryitem(ptr key, ptr value)
 	}
 	item->key = (ptr*)malloc(sizeof(key));
 	item->value = (ptr*)malloc(sizeof(value));
-	item->key = key;
+	if (!item->key || !item->value) {
+		printf("Error: Failed to allocate memory\n");
+		freememitem(item);
+		return NULL;
+	}
+	item->key =key;
 	item->value = value;
 	return item;
 }
@@ -57,6 +63,7 @@ void createbuck(ptr key, ptr value, HashTable* hTable)
 	i32_t index = hashfunction(key);
 	Item* item = allocmemoryitem(key, value);
 	hTable->item[index] = item;
+	hTable->count++;
 	return;
 }
 
@@ -85,4 +92,16 @@ void freememitem(Item* item)
 
 void printhashtable(HashTable* table)
 {
+	if (!table) {
+		printf("Error: can't print it\n");
+		return;
+	}
+	printf_s("-----------My Hash Table-----------\n");
+	for (i32_t i = 0; i < table->size; i++)
+	{
+		if (table->item[i] != NULL) {
+			printf_s("Elem:(key: %p value: %p)\n",  table->item[i]->key,table->item[i]->value);
+		}
+	}
+	printf("\t  -------------------\n\n");
 }

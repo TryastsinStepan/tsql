@@ -28,26 +28,33 @@ HashTable* allocate_memory_table(int size) {
 	return memory_table;
 }
 
-Item* allocate_memory_item(ptr key, ptr value, DataType type) {
+Item* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value) {
 	Item* item = (Item*)malloc(sizeof(Item));
 	if (!item) {
 		printf("Error: Failed to allocate memory for item\n");
 		return NULL;
 	}
+	item->key = (ItemKey*)malloc(sizeof(ItemKey));
+	if (!item->key) {
+		printf("Error: Failed to allocate memory for item key\n");
+		free(item);
+		return NULL;
+	}
+	item->key->type = type_key;
+	item->key->keyI = key;
 
-	item->key = key;
 	item->value = (ItemValue*)malloc(sizeof(ItemValue));
 	if (!item->value) {
 		printf("Error: Failed to allocate memory for item value\n");
 		free(item);
 		return NULL;
 	}
-	item->value->type = type;
+	item->value->type = type_value;
 	item->value->data = value;
 	return item;
 }
 
-void create_bucket(HashTable* hash_table, ptr key, ptr value,DataType type) {
+void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,DataType type_value) {
 	if (key == NULL || value == NULL) {
 		printf("Error: Pass the actual parameters\n");
 		return;
@@ -57,7 +64,7 @@ void create_bucket(HashTable* hash_table, ptr key, ptr value,DataType type) {
 		return;
 	}
 	i32_t index = hash_function(key);
-	Item* item = allocate_memory_item(key, value, type);
+	Item* item = allocate_memory_item(key, type_key, value, type_value);
 	hash_table->items[index] = item;
 	hash_table->count++;
 	return;
@@ -71,7 +78,7 @@ void print_hash_table(HashTable* table) {
 	printf("-----------My Hash Table-----------\n");
 	for (i32_t i = 0; i < table->size; i++) {
 		if (table->items[i] != NULL) {
-			printf("Elem:(key: %p value: %s)\n", table->items[i]->key, table->items[i]->value);
+			printf("Elem:(key: %p value: %s)\n", table->items[i]->key, table->items[i]->value->data);
 		}
 	}
 	printf("\t  -------------------\n\n");

@@ -11,8 +11,13 @@ typedef struct ItemValue {
     ptr data;
 } ItemValue;
 
+typedef struct ItemKey {
+    DataType type;
+    ptr keyI;
+} ItemKey;
+
 typedef struct Item {
-    ptr key;
+    ItemKey* key;
     ItemValue* value;
 } Item;
 
@@ -24,8 +29,8 @@ typedef struct HashTable {
 
 i32_t hash_function(ptr key); 
 HashTable* allocate_memory_table(int size);  
-Item* allocate_memory_item(ptr key, ptr value, DataType type);
-void create_bucket(HashTable* hash_table,ptr key, ptr value,DataType type);
+Item* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value);
+void create_bucket(HashTable* hash_table,ptr key, DataType type_key, ptr value,DataType type_value);
 void free_memory_table(HashTable* hash_table); 
 void free_memory_item(Item* item);  
 void print_hash_table(HashTable* hash_table);  

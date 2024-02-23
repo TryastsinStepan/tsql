@@ -1,13 +1,13 @@
 #include "hashtable.h"
 int main(void)
 {
-	HashTable* hTable= allocmemorytable(10);
+	HashTable* hTable= allocate_memory_table(10);
 	if (hTable == NULL) {
 		printf("Error: Unable to allocate memory.\n");
 		freememtable(hTable);
 		exit(0);
 	}
-	createbuck(1,"Hello", hTable);
-	printhashtable(hTable);
+	create_bucket(1,"Hello", hTable);
+	print_hash_table(hTable);
 	return 0;
 }

@@ -7,7 +7,7 @@ int main(void)
 		free_memory_table(hTable);
 		exit(0);
 	}
-	create_bucket(hTable,1,INT_TYPE,"Hello",STRING_TYPE);
-	print_hash_table(hTable);
+	create_bucket(hTable,1,INT_TYPE,3, INT_TYPE);
+	print_all_hash_table(hTable);
 	return 0;
 }

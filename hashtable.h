@@ -33,4 +33,4 @@ Item* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_
 void create_bucket(HashTable* hash_table,ptr key, DataType type_key, ptr value,DataType type_value);
 void free_memory_table(HashTable* hash_table); 
 void free_memory_item(Item* item);  
-void print_hash_table(HashTable* hash_table);  
+void print_all_hash_table(HashTable* hash_table);

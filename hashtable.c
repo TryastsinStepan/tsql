@@ -70,18 +70,41 @@ void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,
 	return;
 }
 
-void print_hash_table(HashTable* table) {
+void print_all_hash_table(HashTable* table) {
 	if (!table) {
 		printf("Error: can't print it\n");
 		return;
 	}
 	printf("-----------My Hash Table-----------\n");
-	for (i32_t i = 0; i < table->size; i++) {
-		if (table->items[i] != NULL) {
-			printf("Elem:(key: %p value: %s)\n", table->items[i]->key, table->items[i]->value->data);
+	if (table) {
+		for (i32_t i = 0; i < table->size; i++) {
+			if (table->items[i] != NULL) {
+				switch (table->items[i]->key->type) {
+				case  INT_TYPE:
+					printf_s("Elem:(key: %d ", ((int)(table->items[i]->key->keyI)));
+					break;
+				case  STRING_TYPE:
+					printf_s("Elem:(key: %s ", ((char*)(table->items[i]->key->keyI)));
+					break;
+				case  CHAR_TYPE:
+					printf_s("Elem:(key: %c ", ((char)(table->items[i]->key->keyI)));
+					break;
+				}
+
+				switch (table->items[i]->value->type) {
+				case STRING_TYPE:
+					printf("value: %s )\n", ((char*)(table->items[i]->value->data)));
+					break;
+				case INT_TYPE:
+					printf("value: %d )\n", ((int)(table->items[i]->value->data)));
+					break;
+				case CHAR_TYPE:
+					printf("value: %c )\n", ((char)(table->items[i]->value->data)));
+					break;
+				}
+			}
 		}
 	}
-	printf("\t  -------------------\n\n");
 }
 
 void free_memory_table(HashTable* memory) {
@@ -89,18 +112,23 @@ void free_memory_table(HashTable* memory) {
 		printf("Error: Failed to allocate memory for table\n");
 		return;
 	}
-	for (i32_t i = 0; i < memory->size; i++) {
-		Item* item = memory->items[i];
-		free_memory_item(item);
+	if (memory) {
+		for (int i = 0; i < memory->size; i++) {
+			free_memory_item(memory->items[i]);
+		}
+		free(memory->items);
+		free(memory);
 	}
-	free(memory->items);
-	free(memory);
 	printf("The memory has been successfully cleared\n");
 	return;
 }
 
 void free_memory_item(Item* item) {
-	free(item->key);
-	free(item->value);
-	free(item);
+	if (item) {
+		free(item->key->keyI);
+		free(item->key);
+		free(item->value->data);
+		free(item->value);
+		free(item);
+	}
 }

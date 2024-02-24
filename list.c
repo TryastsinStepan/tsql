@@ -7,64 +7,29 @@ List* allocate_memory_list() {
         exit(EXIT_FAILURE);
     }
     list->count = 0;
-    list->head = NULL;
+    list->next = NULL;
+  
     return list;
 }
 
-ItemList* allocate_memory_item_list(ptr data) {
-    if (!data) {
-        printf("Error: Invalid data equals NULL\n");
-        exit(EXIT_FAILURE);
-    }
-    ItemList* item = (ItemList*)malloc(sizeof(ItemList));
-    if (!item) {
-        printf("Error: Failed to allocate memory for item\n");
-        exit(EXIT_FAILURE);
-    }
-    item->data = data;
-    item->next = NULL;
-    return item;
-}
-
 void free_memory_list(List* list) {
+ 
+
+}
+
+List* push(List* list, ItemMap* data) {
     if (!list) {
-        printf("Error: Failed to allocate memory for table\n");
-        return;
-    }
-
-    ItemList* current = list->head;
-    ItemList* next;
-    while (current) {
-        next = current->next;
-        free_memory_item(current);
-        current = next;
-    }
-    free(list);
-}
-
-void free_memory_item(ItemList* item) {
-    if (item) {
-        free(item->data);
-        free(item);
-    }
-}
-
-void push(List* list, ptr data) {
-    ItemList* item = allocate_memory_item_list(data);
-    if (!item) {
-        printf("Error: Failed to allocate memory for item\n");
-        return;
-    }
-
-    if (list->head == NULL) {
-        list->head = item;
+        List* head = allocate_memory_list();
+        head->data = data;
+        list = head;
+        return list;
     }
     else {
-        ItemList* current = list->head;
-        while (current->next) {
-            current = current->next;
-        }
-        current->next = item;
+        List* node = allocate_memory_list();
+        node->data = data;
+        node->next = NULL;
+        list = node;
+        return;
     }
 }
 
@@ -74,9 +39,37 @@ void print_list(List* list) {
         return;
     }
     printf("-----------My List-----------\n");
-    ItemList* current = list->head;
+    List* current = list;
     while (current != NULL) {
-        printf("Elem: link: %p value: %s\n", current->next,(char*) current->data);
+        printf("Elem: ");
+        switch (current->data->key->type) {
+        case INT_TYPE:
+            printf("key: %d, ", ((int)current->data->key->keyI));
+            break;
+        case STRING_TYPE:
+            printf("key: %s, ", (char*)current->data->key->keyI);
+            break;
+        case CHAR_TYPE:
+            printf("key: %c, ", ((char)current->data->key->keyI));
+            break;
+        default:
+            printf("Unknown key data type, ");
+            break;
+        }
+        switch (current->data->value->type) {
+        case INT_TYPE:
+            printf("value: %d\n", ((int)current->data->value->data));
+            break;
+        case STRING_TYPE:
+            printf("value: %s\n", (char*)current->data->value->data);
+            break;
+        case CHAR_TYPE:
+            printf("value: %c\n", ((char)current->data->value->data));
+            break;
+        default:
+            printf("Unknown value data type\n");
+            break;
+        }
         current = current->next;
     }
 }

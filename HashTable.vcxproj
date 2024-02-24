@@ -137,6 +137,7 @@
     <ClInclude Include="hashfunction.h" />
     <ClInclude Include="hashtable.h" />
     <ClInclude Include="list.h" />
+    <ClInclude Include="strucrt.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

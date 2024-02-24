@@ -2,16 +2,16 @@
 #include "list.h"
 int main(void)
 {
-	HashTable* hTable= allocate_memory_table(100);
+	HashTable* hTable= allocate_memory_table(10);
 	if (hTable == NULL) {
 		printf("Error: Unable to allocate memory.\n");
 		exit(0);
 	}
-	create_item(hTable,'g', CHAR_TYPE, 1, INT_TYPE);
+	create_item(hTable,"Sweta", STRING_TYPE, 1, INT_TYPE);
 	create_item(hTable, "Pasha", STRING_TYPE, 2, INT_TYPE);
-	create_item(hTable, "Sweta", STRING_TYPE, 16, INT_TYPE);
-	create_item(hTable, "Denis", STRING_TYPE, 3, INT_TYPE);
-	create_item(hTable, 5, INT_TYPE, 3, INT_TYPE);
+	create_item(hTable, "Masha", STRING_TYPE, 3, INT_TYPE);
+	create_item(hTable, "Dasha", STRING_TYPE, 4, INT_TYPE);
+	create_item(hTable, "Dasha", STRING_TYPE, 5, INT_TYPE);
 	print_all_hash_table(hTable);
 	return 0;
 }

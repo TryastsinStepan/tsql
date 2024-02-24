@@ -1,10 +1,13 @@
 #pragma once
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
 #include "utils.h"
 #include "hashfunction.h"
+#include "list.h"
+
 i32_t size_hash_table;
 
 typedef struct ItemValue {
@@ -24,17 +27,18 @@ typedef struct Item {
 
 typedef struct HashTable {
     ItemMap** items;
+    List** buckets;
     i32_t count;
 } HashTable;
 
+HashTable* allocate_memory_table(int size);
+ItemMap* allocate_memory_item_table(ptr key, DataType type_key, ptr value, DataType type_value);
 
+List** create_buckets();
+collision_handling(hash_table, index, item);
+void handle_collision(HashTable* hash_table,i32_t index, ItemMap* item);
 
-HashTable* allocate_memory_table(int size);  
-static ItemMap* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value);
-
-
-void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value, DataType type_value);
-
+void create_item(HashTable* hash_table, ptr key, DataType type_key, ptr value, DataType type_value);
 
 static void free_memory_item(ItemMap* item);
 void free_memory_table(HashTable* hash_table);

@@ -1,11 +1,9 @@
 #pragma once
 #include "utils.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
-
 typedef struct ItemList {
 	struct ItemList* next;
 	ptr data;

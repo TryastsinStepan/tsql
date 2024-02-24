@@ -41,7 +41,19 @@ HashTable* allocate_memory_table(int size) {
 	return memory_table;
 }
 
-ItemMap* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value) {
+List** create_buckets() {
+	List** list = (List**)calloc(size_hash_table,sizeof(List*));
+	if (!list) {
+		printf("Error: Failed to allocate memory \n");
+		return NULL;
+	}
+	for (i32_t i = 0; i < size_hash_table; i++) {
+		list[i] = NULL;
+	}
+	return list;
+}
+
+ItemMap* allocate_memory_item_table(ptr key, DataType type_key, ptr value, DataType type_value) {
 	ItemMap* item = (ItemMap*)malloc(sizeof(ItemMap));
 	if (!item) {
 		printf("Error: Failed to allocate memory for item\n");
@@ -67,7 +79,7 @@ ItemMap* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType ty
 	return item;
 }
 
-void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,DataType type_value) {
+void create_item(HashTable* hash_table, ptr key, DataType type_key, ptr value,DataType type_value) {
 	if (key == NULL || value == NULL) {
 		printf("Error: Pass the actual parameters\n");
 		return;
@@ -76,17 +88,29 @@ void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,
 		printf("Error: Such hashtable does not exist\n");
 		return;
 	}
-	ItemMap* item = allocate_memory_item(key, type_key, value, type_value);
+	ItemMap* item = allocate_memory_item_table(key, type_key, value, type_value);
 	i32_t index = hash_function(key,type_key);
-	hash_table->items[index] = item;
-	hash_table->count++;
+	ItemMap* currentItem = hash_table->items[index];
+	if (currentItem != NULL) {
+		if (hash_table->count == size_hash_table) {
+			printf("Error: Hash Table is full\n");
+			free_memory_item(currentItem);
+			return;
+		}
+		hash_table->items[index] = item;
+		hash_table->count++;
+	}
+	else {
+		handle_collision(hash_table,index, item);
+		return;
+	}
 	return;
 }
 
 ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (!hash_table) {
 		printf("Error: Failed to allocate memory for table\n");
-		return;
+		return NULL;
 	}
 	i32_t index = hash_function(key,type);
 	ItemMap* sItem = hash_table->items[index];
@@ -100,7 +124,7 @@ ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key) {
 ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (!hash_table) {
 		printf("Error: Failed to allocate memory for table\n");
-		return;
+		return NULL;
 	}
 	i32_t index = hash_function(key, type);
 	ItemMap* sItem = hash_table->items[index];

@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "datatypes.h"
 #include "hashfunction.h"
+i32_t size_hash_table = 0;
 typedef struct ItemValue {
     DataType type;
     ptr data;
@@ -22,7 +23,6 @@ typedef struct Item {
 
 typedef struct HashTable {
     Item** items;  
-    i32_t size;
     i32_t count;
 } HashTable;
 

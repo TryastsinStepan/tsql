@@ -9,13 +9,13 @@ i32_t hash_function(Item* item) {
 	}
 	switch (item->key->type){
 	case STRING_TYPE:
-		index = hash_function_string(item->key->keyI, item->key->type);
+		index = hash_function_string(item->key->keyI, item->key->type, size_hash_table);
 		break;
 	case INT_TYPE:
-		index = hash_function_int(item->key->keyI, item->key->type);
+		index = hash_function_int(item->key->keyI, item->key->type, size_hash_table);
 		break;
 	case CHAR_TYPE:
-		index = hash_function_int(item->key->keyI, item->key->type);
+		index = hash_function_int(item->key->keyI, item->key->type, size_hash_table);
 		break;
 	}
 	return index;
@@ -32,7 +32,7 @@ HashTable* allocate_memory_table(int size) {
 		free_memory_table(memory_table);
 		return NULL;
 	}
-	memory_table->size = size;
+	size_hash_table = size;
 	memory_table->count = 0;
 	memory_table->items = (Item**)calloc(size, sizeof(Item*));
 	if (!memory_table->items) {
@@ -40,7 +40,7 @@ HashTable* allocate_memory_table(int size) {
 		free(memory_table);
 		return NULL;
 	}
-	for (i32_t i = 0; i < memory_table->size; i++) {
+	for (i32_t i = 0; i < size_hash_table; i++) {
 		memory_table->items[i] = NULL;
 	}
 	return memory_table;
@@ -95,7 +95,7 @@ void print_all_hash_table(HashTable* table) {
 	}
 	printf("-----------My Hash Table-----------\n");
 	if (table) {
-		for (i32_t i = 0; i < table->size; i++) {
+		for (i32_t i = 0; i < size_hash_table; i++) {
 			if (table->items[i] != NULL) {
 				switch (table->items[i]->key->type) {
 				case  INT_TYPE:
@@ -131,7 +131,7 @@ void free_memory_table(HashTable* memory) {
 		return;
 	}
 	if (memory) {
-		for (int i = 0; i < memory->size; i++) {
+		for (int i = 0; i < size_hash_table; i++) {
 			free_memory_item(memory->items[i]);
 		}
 		free(memory->items);

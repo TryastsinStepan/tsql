@@ -10,7 +10,7 @@ i32_t hash_function(ptr key, DataType type_key ) {
 		index = hash_function_int(key, size_hash_table);
 		break;
 	case CHAR_TYPE:
-		index = hash_function_char(key, size_hash_table);
+		index = hash_function_int(key, size_hash_table);
 		break;
 	}
 	return index;

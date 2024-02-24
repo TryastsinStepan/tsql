@@ -1,11 +1,10 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
 #include "utils.h"
 #include "datatypes.h"
-
+#include "hashfunction.h"
 typedef struct ItemValue {
     DataType type;
     ptr data;

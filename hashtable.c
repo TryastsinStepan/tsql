@@ -1,12 +1,24 @@
 #include "hashtable.h"
 
 i32_t hash_function(Item* item) {
-	uint64_t i = 0;
-	char* str = item->key->keyI;
-	for (int j = 0; str[j]; j++) {
-		i += str[j];
+	i32_t index = 0;
+	if (!item) {
+		printf("Error: Cant find this elem\n");
+		free_memory_item(item);
+		return NULL;
 	}
-	return i%10;
+	switch (item->key->type){
+	case STRING_TYPE:
+		index = hash_function_string(item->key->keyI, item->key->type);
+		break;
+	case INT_TYPE:
+		index = hash_function_int(item->key->keyI, item->key->type);
+		break;
+	case CHAR_TYPE:
+		index = hash_function_int(item->key->keyI, item->key->type);
+		break;
+	}
+	return index;
 }
 
 HashTable* allocate_memory_table(int size) {
@@ -90,10 +102,10 @@ void print_all_hash_table(HashTable* table) {
 					printf_s("Elem:(index: %d key: %d ",i, ((int)(table->items[i]->key->keyI)));
 					break;
 				case  STRING_TYPE:
-					printf_s("Elem:(key: %s ", ((char*)(table->items[i]->key->keyI)));
+					printf_s("Elem:(index: %d key: %s ",i, ((char*)(table->items[i]->key->keyI)));
 					break;
 				case  CHAR_TYPE:
-					printf_s("Elem:(key: %c ", ((char)(table->items[i]->key->keyI)));
+					printf_s("Elem:(index: %d key: %c ", i, ((char)(table->items[i]->key->keyI)));
 					break;
 				}
 

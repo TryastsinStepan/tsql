@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="hashfunction.c" />
     <ClCompile Include="hashtable.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="datatypes.h" />
+    <ClInclude Include="hashfunction.h" />
     <ClInclude Include="hashtable.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

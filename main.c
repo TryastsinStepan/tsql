@@ -21,5 +21,8 @@ int main(void)
  	     printf("Error: Unable to allocate memory.\n");
 		 exit(0);
 	}
-
+	push(list, (char*)"Hello");
+	push(list, (char*)"My");
+	push(list, (char*)"Name");
+	print_list(list);
 }

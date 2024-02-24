@@ -17,7 +17,7 @@ typedef struct List {
 } List;
 
 List* allocate_memory_list();
-ItemList* allocate_memory_item(ptr data);
+ItemList* allocate_memory_item_list(ptr data);
 
 void free_memory_list(List* list);
 void free_memory_item(ItemList* item);

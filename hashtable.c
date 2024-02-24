@@ -1,7 +1,12 @@
 #include "hashtable.h"
 
-i32_t hash_function(ptr key) {
-	return 1;
+i32_t hash_function(Item* item) {
+	uint64_t i = 0;
+	char* str = item->key->keyI;
+	for (int j = 0; str[j]; j++) {
+		i += str[j];
+	}
+	return i%10;
 }
 
 HashTable* allocate_memory_table(int size) {
@@ -64,8 +69,8 @@ void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,
 		printf("Error: Such hashtable does not exist\n");
 		return;
 	}
-	i32_t index = hash_function(key);
 	Item* item = allocate_memory_item(key, type_key, value, type_value);
+	i32_t index = hash_function(item);
 	hash_table->items[index] = item;
 	hash_table->count++;
 	return;
@@ -82,7 +87,7 @@ void print_all_hash_table(HashTable* table) {
 			if (table->items[i] != NULL) {
 				switch (table->items[i]->key->type) {
 				case  INT_TYPE:
-					printf_s("Elem:(key: %d ", ((int)(table->items[i]->key->keyI)));
+					printf_s("Elem:(index: %d key: %d ",i, ((int)(table->items[i]->key->keyI)));
 					break;
 				case  STRING_TYPE:
 					printf_s("Elem:(key: %s ", ((char*)(table->items[i]->key->keyI)));

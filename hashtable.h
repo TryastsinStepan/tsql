@@ -27,7 +27,7 @@ typedef struct HashTable {
     i32_t count;
 } HashTable;
 
-i32_t hash_function(ptr key); 
+i32_t hash_function(Item* item); 
 void print_all_hash_table(HashTable* hash_table);
 HashTable* allocate_memory_table(int size);  
 void free_memory_table(HashTable* hash_table);

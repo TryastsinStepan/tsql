@@ -76,7 +76,7 @@ void print_list(List* list) {
     printf("-----------My List-----------\n");
     ItemList* current = list->head;
     while (current != NULL) {
-        printf("Elem: link: %p value: %s\n", current->next, current->data);
+        printf("Elem: link: %p value: %s\n", current->next,(char*) current->data);
         current = current->next;
     }
 }

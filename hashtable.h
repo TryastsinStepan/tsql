@@ -40,5 +40,8 @@ static void free_memory_item(ItemMap* item);
 void free_memory_table(HashTable* hash_table);
 
 
-i32_t hash_function(ItemMap* item);
+i32_t hash_function(ptr key, DataType type_key);
+void search_elem_in_hash_table(HashTable* hash_table, ItemMap* item);
+
 void print_all_hash_table(HashTable* hash_table);
+void print_elem_by_key(HashTable* hash_table,ptr key);

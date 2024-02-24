@@ -1,21 +1,16 @@
 #include "hashtable.h"
 
-i32_t hash_function(ItemMap* item) {
+i32_t hash_function(ptr key, DataType type_key) {
 	i32_t index = 0;
-	if (!item) {
-		printf("Error: Cant find this elem\n");
-		free_memory_item(item);
-		return NULL;
-	}
-	switch (item->key->type){
+	switch (type_key){
 	case STRING_TYPE:
-		index = hash_function_string(item->key->keyI, item->key->type, size_hash_table);
+		index = hash_function_string(key, size_hash_table);
 		break;
 	case INT_TYPE:
-		index = hash_function_int(item->key->keyI, item->key->type, size_hash_table);
+		index = hash_function_int(key, size_hash_table);
 		break;
 	case CHAR_TYPE:
-		index = hash_function_int(item->key->keyI, item->key->type, size_hash_table);
+		index = hash_function_int(key, size_hash_table);
 		break;
 	}
 	return index;
@@ -82,12 +77,22 @@ void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,
 		return;
 	}
 	ItemMap* item = allocate_memory_item(key, type_key, value, type_value);
-	i32_t index = hash_function(item);
+	i32_t index = hash_function(key,type_key);
 	hash_table->items[index] = item;
 	hash_table->count++;
 	return;
 }
+void search_elem_in_hash_table(HashTable* hash_table,DataType type, ptr *key) {
+	if (!hash_table) {
+		printf("Error: Failed to allocate memory for table\n");
+		return;
+	}
+	i32_t index = hash_function(key,type);
+	ItemMap* sItem = hash_table->items[index];
+	if(sItem!=NULL){
 
+	}
+}
 void print_all_hash_table(HashTable* table) {
 	if (!table) {
 		printf("Error: can't print it\n");
@@ -124,7 +129,13 @@ void print_all_hash_table(HashTable* table) {
 		}
 	}
 }
-
+void print_elem_by_key(HashTable* hash_table, ptr key) {
+	if (!hash_table) {
+		printf("Error: Failed to allocate memory for table\n");
+		return;
+	}
+	
+}
 void free_memory_table(HashTable* memory) {
 	if (!memory) {
 		printf("Error: Failed to allocate memory for table\n");

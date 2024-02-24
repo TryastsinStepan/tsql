@@ -16,7 +16,7 @@ typedef struct List {
 	i32_t count;
 } List;
 
-List* allocate_memory_list(int size);
+List* allocate_memory_list();
 ItemList* allocate_memory_item(ptr data);
 
 void free_memory_list(List* list);

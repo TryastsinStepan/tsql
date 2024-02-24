@@ -41,7 +41,8 @@ void free_memory_table(HashTable* hash_table);
 
 
 i32_t hash_function(ptr key, DataType type_key);
-void search_elem_in_hash_table(HashTable* hash_table, ItemMap* item);
+ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key);
+ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key);
 
 void print_all_hash_table(HashTable* hash_table);
-void print_elem_by_key(HashTable* hash_table,ptr key);
+void print_elem_by_key(HashTable* hash_table, DataType type, ptr key);

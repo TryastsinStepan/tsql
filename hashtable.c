@@ -1,10 +1,10 @@
 #include "hashtable.h"
 
-i32_t hash_function(ptr key, DataType type_key) {
+i32_t hash_function(ptr key, DataType type_key ) {
 	i32_t index = 0;
 	switch (type_key){
 	case STRING_TYPE:
-		index = hash_function_string(key, size_hash_table);
+		index = hash_function_string(key,size_hash_table);
 		break;
 	case INT_TYPE:
 		index = hash_function_int(key, size_hash_table);
@@ -82,7 +82,8 @@ void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,
 	hash_table->count++;
 	return;
 }
-void search_elem_in_hash_table(HashTable* hash_table,DataType type, ptr *key) {
+
+ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (!hash_table) {
 		printf("Error: Failed to allocate memory for table\n");
 		return;
@@ -90,8 +91,25 @@ void search_elem_in_hash_table(HashTable* hash_table,DataType type, ptr *key) {
 	i32_t index = hash_function(key,type);
 	ItemMap* sItem = hash_table->items[index];
 	if(sItem!=NULL){
-
+		if (hash_table->items[index]->key->keyI == key) {
+			return sItem;
+		}
 	}
+	return NULL;
+}
+ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key) {
+	if (!hash_table) {
+		printf("Error: Failed to allocate memory for table\n");
+		return;
+	}
+	i32_t index = hash_function(key, type);
+	ItemMap* sItem = hash_table->items[index];
+	if (sItem != NULL) {
+		if (hash_table->items[index]->key->keyI == key) {
+			return sItem->value->data;
+		}
+	}
+	return NULL;
 }
 void print_all_hash_table(HashTable* table) {
 	if (!table) {
@@ -112,6 +130,9 @@ void print_all_hash_table(HashTable* table) {
 				case  CHAR_TYPE:
 					printf_s("Elem:(index: %d key: %c ", i, ((char)(table->items[i]->key->keyI)));
 					break;
+				default:
+					printf_s("No such key exists");
+					break;
 				}
 
 				switch (table->items[i]->value->type) {
@@ -124,15 +145,53 @@ void print_all_hash_table(HashTable* table) {
 				case CHAR_TYPE:
 					printf("value: %c )\n", ((char)(table->items[i]->value->data)));
 					break;
+				default:
+					printf_s("No such value exists");
+					break;
+				}
 				}
 			}
-		}
 	}
 }
-void print_elem_by_key(HashTable* hash_table, ptr key) {
+void print_elem_by_key(HashTable* hash_table, DataType type,ptr key) {
 	if (!hash_table) {
 		printf("Error: Failed to allocate memory for table\n");
 		return;
+	}
+	ItemMap* item = get_item_by_key(hash_table, type, key);
+	if (item != NULL) {
+		switch (item->key->type) {
+		case  INT_TYPE:
+				printf_s("Elem:( key: %d ",  ((int)(item->key->keyI)));
+				break;
+		case  STRING_TYPE:
+				printf_s("Elem:( key: %s ",  ((char*)(item->key->keyI)));
+				break;
+		case  CHAR_TYPE:
+				printf_s("Elem:( key: %c ",  ((char)(item->key->keyI)));
+				break;
+		default:
+			printf_s("No such key exists");
+			break;
+		}
+		
+		switch (item->value->type) {
+		case STRING_TYPE:
+				printf("value: %s )\n", ((char*)(item->value->data)));
+				break;
+		case INT_TYPE:
+				printf("value: %d )\n", ((int)(item->value->data)));
+				break;
+		case CHAR_TYPE:
+				printf("value: %c )\n", ((char)(item->value->data)));
+				break;
+		default:
+			printf_s("No such value exists");
+			break;
+		}
+	}
+	else {
+		printf_s("No such item exists");
 	}
 	
 }

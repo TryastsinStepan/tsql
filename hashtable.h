@@ -1,11 +1,11 @@
+#pragma once
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
 #include "utils.h"
-#include "datatypes.h"
 #include "hashfunction.h"
-i32_t size_hash_table = 0;
+i32_t size_hash_table;
 typedef struct ItemValue {
     DataType type;
     ptr data;

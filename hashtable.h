@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "hashfunction.h"
 i32_t size_hash_table;
+
 typedef struct ItemValue {
     DataType type;
     ptr data;
@@ -19,19 +20,25 @@ typedef struct ItemKey {
 typedef struct Item {
     ItemKey* key;
     ItemValue* value;
-} Item;
+} ItemMap;
 
 typedef struct HashTable {
-    Item** items;  
+    ItemMap** items;
     i32_t count;
 } HashTable;
 
-i32_t hash_function(Item* item); 
-void print_all_hash_table(HashTable* hash_table);
+
+
 HashTable* allocate_memory_table(int size);  
-void free_memory_table(HashTable* hash_table);
+static ItemMap* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value);
+
+
 void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value, DataType type_value);
 
-static Item* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value);
-static void free_memory_item(Item* item);
 
+static void free_memory_item(ItemMap* item);
+void free_memory_table(HashTable* hash_table);
+
+
+i32_t hash_function(ItemMap* item);
+void print_all_hash_table(HashTable* hash_table);

@@ -1,10 +1,9 @@
 #include "hashtable.h"
 int main(void)
 {
-	HashTable* hTable= allocate_memory_table(10);
+	HashTable* hTable= allocate_memory_table(100);
 	if (hTable == NULL) {
 		printf("Error: Unable to allocate memory.\n");
-		free_memory_table(hTable);
 		exit(0);
 	}
 	create_bucket(hTable,"Stepan", STRING_TYPE, 1, INT_TYPE);

@@ -1,6 +1,6 @@
 #include "hashtable.h"
 
-i32_t hash_function(Item* item) {
+i32_t hash_function(ItemMap* item) {
 	i32_t index = 0;
 	if (!item) {
 		printf("Error: Cant find this elem\n");
@@ -34,7 +34,7 @@ HashTable* allocate_memory_table(int size) {
 	}
 	size_hash_table = size;
 	memory_table->count = 0;
-	memory_table->items = (Item**)calloc(size, sizeof(Item*));
+	memory_table->items = (ItemMap**)calloc(size, sizeof(ItemMap*));
 	if (!memory_table->items) {
 		printf("Error: Failed to allocate memory for item\n");
 		free(memory_table);
@@ -46,8 +46,8 @@ HashTable* allocate_memory_table(int size) {
 	return memory_table;
 }
 
-Item* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value) {
-	Item* item = (Item*)malloc(sizeof(Item));
+ItemMap* allocate_memory_item(ptr key, DataType type_key, ptr value, DataType type_value) {
+	ItemMap* item = (ItemMap*)malloc(sizeof(ItemMap));
 	if (!item) {
 		printf("Error: Failed to allocate memory for item\n");
 		return NULL;
@@ -81,7 +81,7 @@ void create_bucket(HashTable* hash_table, ptr key, DataType type_key, ptr value,
 		printf("Error: Such hashtable does not exist\n");
 		return;
 	}
-	Item* item = allocate_memory_item(key, type_key, value, type_value);
+	ItemMap* item = allocate_memory_item(key, type_key, value, type_value);
 	i32_t index = hash_function(item);
 	hash_table->items[index] = item;
 	hash_table->count++;
@@ -141,7 +141,7 @@ void free_memory_table(HashTable* memory) {
 	return;
 }
 
-void free_memory_item(Item* item) {
+void free_memory_item(ItemMap* item) {
 	if (item) {
 		free(item->key->keyI);
 		free(item->key);

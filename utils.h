@@ -1,4 +1,5 @@
 #pragma once
+
 typedef char i8_t;
 typedef short i16_t;
 typedef int i32_t;

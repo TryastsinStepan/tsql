@@ -9,6 +9,7 @@ int main(void)
 	}
 	create_bucket(hTable,'g', CHAR_TYPE, 1, INT_TYPE);
 	create_bucket(hTable, "Pasha", STRING_TYPE, 2, INT_TYPE);
+	create_bucket(hTable, "Sweta", STRING_TYPE, 16, INT_TYPE);
 	create_bucket(hTable, "Denis", STRING_TYPE, 3, INT_TYPE);
 	print_all_hash_table(hTable);
 	return 0;

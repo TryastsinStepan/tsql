@@ -12,12 +12,9 @@ i32_t hash_function_string(ptr key, i32_t maxindex) {
 
 i32_t hash_function_char(ptr key, i32_t maxindex) {
     uint64_t hash_value = 0;
-    char* str = (char*)key;
-    while (*str) {
-        hash_value = (hash_value * 31) + *str;
-        str++;
-    }
-    return (i32_t)hash_value;
+    char str = (char)key;
+    hash_value = (hash_value * 31) + (int)str;
+    return (i32_t)hash_value% maxindex;
 }
 
 i32_t hash_function_int(ptr key, i32_t maxindex) {

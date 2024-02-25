@@ -7,12 +7,26 @@ List* allocate_memory_list() {
     }
     list->count = 0;
     list->next = NULL;
-  
+
     return list;
 }
 
 void free_memory_list(List* list) {
     if (!list) {
+        return;
+    }
+    free(list);
+    return;
+}
+void free_memory_full_list(List* list) {
+    if (!list) {
+        return; 
+    }
+    List* next;
+    while (list != NULL) {
+        next = list->next;
+        free(list);
+        list = next;
         return;
     }
     free(list);
@@ -34,7 +48,7 @@ List* push(List* list, ItemMap* data) {
     }
 
     List* temp = list;
-    while (temp->next!=NULL) {
+    while (temp->next != NULL) {
         temp = temp->next;
     }
 
@@ -109,7 +123,7 @@ List* del(List* list, ItemMap* data) {
     }
     return list;
 }
-ItemMap* find(List* list, DataType type,ptr key) {
+ItemMap* find(List* list, DataType type, ptr key) {
     List* current = list;
     while (current != NULL) {
         if (current->data->key->keyI == key) {

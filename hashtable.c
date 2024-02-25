@@ -1,9 +1,9 @@
 #include "hashtable.h"
-i32_t hash_function(ptr key, DataType type_key ) {
+i32_t hash_function(ptr key, DataType type_key) {
 	i32_t index = 0;
-	switch (type_key){
+	switch (type_key) {
 	case STRING_TYPE:
-		index = hash_function_string(key,size_hash_table);
+		index = hash_function_string(key, size_hash_table);
 		break;
 	case INT_TYPE:
 		index = hash_function_int(key, size_hash_table);
@@ -15,7 +15,7 @@ i32_t hash_function(ptr key, DataType type_key ) {
 	return index;
 }
 List** create_buckets() {
-	List** list = (List**)calloc(size_hash_table,sizeof(List*));
+	List** list = (List**)calloc(size_hash_table, sizeof(List*));
 	if (!list) {
 		printf("Error: Failed to allocate memory for buckets\n");
 		return NULL;
@@ -86,7 +86,7 @@ ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key) {
 		printf("Error: Failed to allocate memory for table\n");
 		return NULL;
 	}
-	i32_t index = hash_function(key,type);
+	i32_t index = hash_function(key, type);
 	ItemMap* sItem = hash_table->items[index];
 	List* findl = hash_table->buckets[index];
 	if (sItem != NULL) {
@@ -119,9 +119,9 @@ void balance_table(HashTable* hash_table) {
 		if (item == NULL) {
 			List* list = hash_table->buckets[i];
 			if (list != NULL) {
-					hash_table->items[i] = list->data;
-					free_memory_list(list);
-					hash_table->buckets[i] = NULL;
+				hash_table->items[i] = list->data;
+				free_memory_list(list);
+				hash_table->buckets[i] = NULL;
 			}
 		}
 	}

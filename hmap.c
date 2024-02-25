@@ -1,4 +1,4 @@
-#include"hmap.h"
+ï»¿#include"hmap.h"
 HashTable* allocate_memory_table(int size) {
 	if (size <= 0) {
 		printf("Error: Invalid size for memory allocation (%d)\n", size);
@@ -27,7 +27,7 @@ HashTable* allocate_memory_table(int size) {
 	if (!memory_table->buckets) {
 		printf("Error: Failed to create buckets\n");
 		free_memory_item(memory_table->items);
-		free_memory_table(memory_table); // îñâîáîäèì ïàìÿòü, âûäåëåííóþ äëÿ òàáëèöû
+		free_memory_table(memory_table); // Ã®Ã±Ã¢Ã®Ã¡Ã®Ã¤Ã¨Ã¬ Ã¯Ã Ã¬Ã¿Ã²Ã¼, Ã¢Ã»Ã¤Ã¥Ã«Ã¥Ã­Ã­Ã³ÅŸ Ã¤Ã«Ã¿ Ã²Ã Ã¡Ã«Ã¨Ã¶Ã»
 		return NULL;
 	}
 	return memory_table;
@@ -75,7 +75,7 @@ void print_all_hash_table(HashTable* table) {
 		if (bucket != NULL) {
 			printf("Index bucket %d\nList\n", i);
 			print_list(bucket);
-			
+
 		}
 	}
 }
@@ -180,7 +180,7 @@ void free_memory_table(HashTable* memory) {
 	free(memory->items);
 
 	for (int i = 0; i < size_hash_table; i++) {
-		free_memory_list(memory->buckets[i]);
+		free_memory_full_list(memory->buckets[i]);
 	}
 	free(memory->buckets);
 
@@ -208,6 +208,6 @@ void delete_elem(HashTable* hash_table, ptr key, DataType type_key) {
 			hash_table->buckets[index] = save;
 			printf("Elem was delete\n");
 		}
-		//balance_table(hash_table);
+		balance_table(hash_table);
 	}
 }

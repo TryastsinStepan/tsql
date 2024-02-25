@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="hashfunction.c" />
     <ClCompile Include="hashtable.c" />
+    <ClCompile Include="hmap.c" />
     <ClCompile Include="list.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
@@ -136,6 +137,7 @@
     <ClInclude Include="datatypes.h" />
     <ClInclude Include="hashfunction.h" />
     <ClInclude Include="hashtable.h" />
+    <ClInclude Include="hmap.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="strucrt.h" />
     <ClInclude Include="utils.h" />

@@ -1,5 +1,4 @@
 #include "list.h"
-
 List* allocate_memory_list() {
     List* list = (List*)malloc(sizeof(List));
     if (!list) {
@@ -102,16 +101,17 @@ void del(List* list, ItemMap* data) {
         free_memory_list(current);
         return;
     }
-    while (current->next != NULL && current->next->data != data) {
-        current = current->next;
+    while (current->next != NULL) {
+        if (current->next->data == data) {
+            List* curDel = current->next;
+            current->next = curDel->next;
+            free_memory_list(curDel);
+        }
+        else {
+            current = current->next;
+        }
     }
-    if (current->next == NULL) {
-        printf("Error: Element not found in list\n");
-        return;
-    }
-    List* curDel = current->next;
-    current->next = curDel->next;
-    free_memory_list(curDel);
+    printf("Error: Element not found in list\n");
 }
 ItemMap* find(List* list, DataType type,ptr key) {
     List* current = list;

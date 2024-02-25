@@ -1,5 +1,4 @@
 #include "hashtable.h"
-
 i32_t hash_function(ptr key, DataType type_key ) {
 	i32_t index = 0;
 	switch (type_key){

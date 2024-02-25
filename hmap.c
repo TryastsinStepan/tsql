@@ -111,7 +111,7 @@ void print_elem_by_key(HashTable* hash_table, DataType type, ptr key) {
 			printf("value: %c )\n", ((char)(item->value->data)));
 			break;
 		default:
-			printf_s("No such value exists");
+			printf_s("No such type exists");
 			break;
 		}
 	}
@@ -185,4 +185,29 @@ void free_memory_table(HashTable* memory) {
 
 	free(memory);
 	printf("Memory has been successfully cleared\n");
+}
+void delete_elem(HashTable* hash_table, ptr key, DataType type_key) {
+	if (!hash_table) {
+		fprintf(stderr, "Error: Hash table is NULL\n");
+		return NULL;
+	}
+	i32_t index = hash_function(key, type_key);
+	ItemMap* sItem = hash_table->items[index];
+	List* l = hash_table->buckets[index];
+	if (sItem != NULL) {
+		if (hash_table->items[index]->key->keyI == key) {
+			free_memory_item(hash_table->items[index]);
+			hash_table->items[index] = NULL;
+			printf("Elem was delete\n");
+		}
+		if (l->data->key->keyI == key) {
+			ItemMap* delet = l->data;
+			del(l, delet);
+			hash_table->buckets[index] = NULL;
+			printf("Elem was delete\n");
+			return;
+		}
+
+	}
+	
 }

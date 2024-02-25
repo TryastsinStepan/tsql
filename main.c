@@ -17,8 +17,7 @@ int main(void)
 	create_item(hTable, 'i', CHAR_TYPE, 8, INT_TYPE);
 	create_item(hTable, 'n', CHAR_TYPE, 9, INT_TYPE);
 	print_all_hash_table(hTable);
-	delete_elem(hTable, 'b', CHAR_TYPE);
-	print_elem_by_key(hTable, 'f', CHAR_TYPE);
+	delete_elem(hTable, 'l', CHAR_TYPE);
 	print_all_hash_table(hTable);
 	free_memory_table(hTable);
 

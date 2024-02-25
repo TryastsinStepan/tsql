@@ -75,6 +75,7 @@ void print_all_hash_table(HashTable* table) {
 		if (bucket != NULL) {
 			printf("Index bucket %d\nList\n", i);
 			print_list(bucket);
+			
 		}
 	}
 }
@@ -189,30 +190,24 @@ void free_memory_table(HashTable* memory) {
 void delete_elem(HashTable* hash_table, ptr key, DataType type_key) {
 	if (!hash_table) {
 		fprintf(stderr, "Error: Hash table is NULL\n");
-		return;
+		return NULL;
 	}
-
 	i32_t index = hash_function(key, type_key);
 	ItemMap* sItem = hash_table->items[index];
 	List* l = hash_table->buckets[index];
-
 	if (sItem != NULL) {
 		if (hash_table->items[index]->key->keyI == key) {
 			free_memory_item(hash_table->items[index]);
 			hash_table->items[index] = NULL;
 			printf("Elem was delete\n");
-			return;
 		}
-	}
-
-	if (l != NULL) {
 		if (l->data->key->keyI == key) {
 			ItemMap* delet = l->data;
 			del(l, delet);
+			hash_table->buckets[index] = NULL;
 			printf("Elem was delete\n");
-			return;
 		}
-	}
 
-	printf("Error: Element not found\n");
+	}
+	balance_table(hash_table);
 }

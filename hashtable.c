@@ -108,3 +108,21 @@ void free_memory_item(ItemMap* item) {
 	free(item->value);
 	free(item);
 }
+void balance_table(HashTable* hash_table) {
+	if (!hash_table) {
+		printf("Error: Failed to allocate memory for table\n");
+		return NULL;
+	}
+	for (size_t i = 0; i < size_hash_table; i++)
+	{
+		ItemMap* item = hash_table->items[i];
+		if (item == NULL) {
+			List* list = hash_table->buckets[i];
+			if (list != NULL) {
+					hash_table->items[i] = list->data;
+					free_memory_list(list);
+					hash_table->buckets[i] = NULL;
+			}
+		}
+	}
+}

@@ -13,10 +13,17 @@ List* allocate_memory_list() {
 }
 
 void free_memory_list(List* list) {
- 
-
+    if (!list) {
+        return; // Дополнительная проверка на NULL необходима, чтобы избежать ошибки при попытке освободить память, которая не была выделена
+    }
+    List* next;
+    while (list != NULL) {
+        next = list->next;
+        free(list);
+        list = next;
+    }
+    return;
 }
-
 List* push(List* list, ItemMap* data) {
     if (!list) {
         List* head = allocate_memory_list();

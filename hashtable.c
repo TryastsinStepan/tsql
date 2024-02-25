@@ -243,22 +243,24 @@ void free_memory_table(HashTable* memory) {
 		printf("Error: Failed to allocate memory for table\n");
 		return;
 	}
-	if (memory) {
-		for (int i = 0; i < size_hash_table; i++) {
-			free_memory_item(memory->items[i]);
-		}
-		free(memory->items);
-		free(memory);
+
+	for (int i = 0; i < size_hash_table; i++) {
+		free_memory_item(memory->items[i]);
 	}
+	free(memory->items);
+
+	for (int i = 0; i < size_hash_table; i++) {
+		free_memory_list(memory->buckets[i]);
+	}
+	free(memory->buckets);
+
+	free(memory);
 	printf("The memory has been successfully cleared\n");
-	return;
 }
 
 void free_memory_item(ItemMap* item) {
 	if (item) {
-		free(item->key->keyI);
 		free(item->key);
-		free(item->value->data);
 		free(item->value);
 		free(item);
 	}

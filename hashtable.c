@@ -98,7 +98,18 @@ ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key) {
 		if (hash_table->items[index]->key->keyI == key) {
 			return sItem;
 		}
+		else {
+			List* l = hash_table->buckets[index];
+			List* current = l;
+			while (current != NULL) {
+				if (l->data->key->keyI == key) {
+					return l->data;
+				}
+				current = current->next;
+			}
+		}
 	}
+
 	return NULL;
 }
 

@@ -17,54 +17,79 @@ i32_t hash_function(ptr key, DataType type_key ) {
 }
 
 HashTable* allocate_memory_table(int size) {
-	if (size < 0) {
+	if (size <= 0) {
 		printf("Error: Invalid size for memory allocation (%d)\n", size);
 		return NULL;
 	}
+
 	HashTable* memory_table = (HashTable*)malloc(sizeof(HashTable));
 	if (!memory_table) {
 		printf("Error: Failed to allocate memory for table\n");
-		free_memory_table(memory_table);
 		return NULL;
 	}
 	size_hash_table = size;
 	memory_table->count = 0;
+
 	memory_table->items = (ItemMap**)calloc(size, sizeof(ItemMap*));
 	if (!memory_table->items) {
-		printf("Error: Failed to allocate memory for item\n");
-		free(memory_table);
+		printf("Error: Failed to allocate memory for item array\n");
+		free(memory_table); 
 		return NULL;
 	}
+
 	for (i32_t i = 0; i < size_hash_table; i++) {
 		memory_table->items[i] = NULL;
 	}
 	memory_table->buckets = create_buckets();
+	if (!memory_table->buckets) {
+		printf("Error: Failed to create buckets\n");
+		free_memory_item(memory_table->items);
+		free_memory_table(memory_table); // освободим память, выделенную для таблицы
+		return NULL;
+	}
 	return memory_table;
 }
 
 List** create_buckets() {
 	List** list = (List**)calloc(size_hash_table,sizeof(List*));
 	if (!list) {
-		printf("Error: Failed to allocate memory \n");
+		printf("Error: Failed to allocate memory for buckets\n");
 		return NULL;
 	}
+
 	for (i32_t i = 0; i < size_hash_table; i++) {
 		list[i] = NULL;
 	}
+
 	return list;
 }
 void handle_collision(HashTable* hash_table, i32_t index, ItemMap* item) {
+	if (!hash_table) {
+		printf("Error: Hash table is NULL\n");
+		return;
+	}
+	if (index < 0 || index >= size_hash_table) {
+		printf("Error: Invalid index (%d)\n", index);
+		return;
+	}
+	if (!item) {
+		printf("Error: Item is NULL\n");
+		return;
+	}
+
+	if (!hash_table->buckets) {
+		printf("Error: Buckets array is NULL\n");
+		return;
+	}
 	List* l = hash_table->buckets[index];
 	if (l == NULL) {
 		l = allocate_memory_list();
 		l->data = item;
 		l->next = NULL;
 		hash_table->buckets[index] = l;
-		return;
 	}
 	else {
 		hash_table->buckets[index] = push(l, item);
-		return;
 	}
 }
 ItemMap* allocate_memory_item_table(ptr key, DataType type_key, ptr value, DataType type_value) {
@@ -240,7 +265,7 @@ void print_elem_by_key(HashTable* hash_table, DataType type,ptr key) {
 }
 void free_memory_table(HashTable* memory) {
 	if (!memory) {
-		printf("Error: Failed to allocate memory for table\n");
+		printf("Error: Hash table is NULL\n");
 		return;
 	}
 
@@ -255,13 +280,14 @@ void free_memory_table(HashTable* memory) {
 	free(memory->buckets);
 
 	free(memory);
-	printf("The memory has been successfully cleared\n");
+	printf("Memory has been successfully cleared\n");
 }
 
 void free_memory_item(ItemMap* item) {
-	if (item) {
-		free(item->key);
-		free(item->value);
-		free(item);
+	if (!item) {
+		return;
 	}
+	free(item->key);
+	free(item->value);
+	free(item);
 }

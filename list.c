@@ -24,13 +24,24 @@ List* push(List* list, ItemMap* data) {
         list = head;
         return list;
     }
-    else {
+    else if (list->next == NULL) {
         List* node = allocate_memory_list();
         node->data = data;
         node->next = NULL;
-        list = node;
+        list->next = node;
         return;
     }
+
+    List* temp = list;
+    while (temp->next!=NULL) {
+        temp = temp->next;
+    }
+
+    List* node = allocate_memory_list();
+    node->data = data;
+    node->next = NULL;
+    temp->next = node;
+    return list;
 }
 
 void print_list(List* list) {

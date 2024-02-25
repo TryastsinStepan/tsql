@@ -156,12 +156,7 @@ void print_all_hash_table(HashTable* table) {
 	}
 	printf("-----------My Hash Table-----------\n");
 	for (i32_t i = 0; i < size_hash_table; i++) {
-		printf("Bucket[%d]:\n", i);
-		List* bucket = table->buckets[i];
-		if (bucket != NULL) {
-			printf("  List in bucket:\n");
-			print_list(bucket);
-		}
+
 		ItemMap* item = table->items[i];
 		if (item != NULL) {
 			printf("  Item in bucket:\n");
@@ -193,6 +188,11 @@ void print_all_hash_table(HashTable* table) {
 				printf("No such value exists");
 				break;
 			}
+		}
+		List* bucket = table->buckets[i];
+		if (bucket != NULL) {
+			printf("  List in bucket:\n");
+			print_list(bucket);
 		}
 	}
 }

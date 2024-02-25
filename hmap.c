@@ -203,11 +203,11 @@ void delete_elem(HashTable* hash_table, ptr key, DataType type_key) {
 		}
 		if (l->data->key->keyI == key) {
 			ItemMap* delet = l->data;
-			del(l, delet);
+			List* save = del(l, delet);
 			hash_table->buckets[index] = NULL;
+			hash_table->buckets[index] = save;
 			printf("Elem was delete\n");
 		}
-
+		//balance_table(hash_table);
 	}
-	balance_table(hash_table);
 }

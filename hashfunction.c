@@ -5,9 +5,9 @@ i32_t hash_function_string(ptr key, i32_t maxindex) {
     char* str = (char*)key;
     int len = strlen(str);
     for (int i = 0; i < len; i++) {
-        hash_value = (hash_value * 31 + (uint64_t)str[i]) % maxindex;
+        hash_value = (hash_value << 5) + (uint64_t)str[i];
     }
-    return (i32_t)hash_value;
+    return (i32_t)(hash_value % maxindex); 
 }
 
 i32_t hash_function_char(ptr key, i32_t maxindex) {

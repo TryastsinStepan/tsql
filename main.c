@@ -8,14 +8,14 @@ int main(void)
 		exit(0);
 	}
 	create_item(hTable,"Masha", STRING_TYPE, 1, INT_TYPE);
-	create_item(hTable, "Masha", STRING_TYPE, 2, INT_TYPE);
-	create_item(hTable, "Masha", STRING_TYPE, 3, INT_TYPE);
-	create_item(hTable, "Masha", STRING_TYPE, 4, INT_TYPE);
-	create_item(hTable, "Masha", STRING_TYPE, 5, INT_TYPE);
-	create_item(hTable, "Sasha", STRING_TYPE, 6, INT_TYPE);
+	create_item(hTable, "Dasha", STRING_TYPE, 2, INT_TYPE);
+	create_item(hTable, "Pasha", STRING_TYPE, 3, INT_TYPE);
+	create_item(hTable, "Svata", STRING_TYPE, 4, INT_TYPE);
+	create_item(hTable, "Denis", STRING_TYPE, 5, INT_TYPE);
+	create_item(hTable, "Stepan", STRING_TYPE, 6, INT_TYPE);
 	create_item(hTable, "Sasha", STRING_TYPE, 7, INT_TYPE);
 	create_item(hTable, "Masha", STRING_TYPE, 8, INT_TYPE);
-	create_item(hTable, "Masha", STRING_TYPE, 9, INT_TYPE);
+	create_item(hTable, "Olya", STRING_TYPE, 9, INT_TYPE);
 	print_all_hash_table(hTable);
 	free_memory_table(hTable);
 	return 0;

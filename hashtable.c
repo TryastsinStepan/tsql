@@ -184,19 +184,18 @@ void print_all_hash_table(HashTable* table) {
 
 		ItemMap* item = table->items[i];
 		if (item != NULL) {
-			printf("  Item in bucket:\n");
 			switch (item->key->type) {
 			case INT_TYPE:
-				printf("    Elem: index: %d, key: %d, ", i, ((int)(item->key->keyI)));
+				printf("Elem: index: %d, key: %d, ", i, ((int)(item->key->keyI)));
 				break;
 			case STRING_TYPE:
-				printf("    Elem: index: %d, key: %s, ", i, (char*)(item->key->keyI));
+				printf("Elem: index: %d, key: %s, ", i, (char*)(item->key->keyI));
 				break;
 			case CHAR_TYPE:
-				printf("    Elem: index: %d, key: %c, ", i, ((char)(item->key->keyI)));
+				printf("Elem: index: %d, key: %c, ", i, ((char)(item->key->keyI)));
 				break;
 			default:
-				printf("    No such key exists");
+				printf("No such key exists");
 				break;
 			}
 			switch (item->value->type) {
@@ -216,7 +215,7 @@ void print_all_hash_table(HashTable* table) {
 		}
 		List* bucket = table->buckets[i];
 		if (bucket != NULL) {
-			printf("  List in bucket:\n");
+			printf("Index bucket %d\nList\n",i);
 			print_list(bucket);
 		}
 	}

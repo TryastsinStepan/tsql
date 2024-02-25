@@ -56,19 +56,17 @@ void print_list(List* list) {
         printf("Error: list is NULL\n");
         return;
     }
-    printf("-----------My List-----------\n");
     List* current = list;
     while (current != NULL) {
-        printf("Elem: ");
         switch (current->data->key->type) {
         case INT_TYPE:
-            printf("key: %d, ", ((int)current->data->key->keyI));
+            printf("  Elem: " "key: %d, ", ((int)current->data->key->keyI));
             break;
         case STRING_TYPE:
-            printf("key: %s, ", (char*)current->data->key->keyI);
+            printf("  Elem: key: %s, ", (char*)current->data->key->keyI);
             break;
         case CHAR_TYPE:
-            printf("key: %c, ", ((char)current->data->key->keyI));
+            printf("  Elem: key: %c, ", ((char)current->data->key->keyI));
             break;
         default:
             printf("Unknown key data type, ");

@@ -17,8 +17,10 @@ int main(void)
 	create_item(hTable, 'i', CHAR_TYPE, 8, INT_TYPE);
 	create_item(hTable, 'n', CHAR_TYPE, 9, INT_TYPE);
 	print_all_hash_table(hTable);
-	print_elem_by_key(hTable, CHAR_TYPE,'n');
+	print_elem_by_key(hTable, CHAR_TYPE,'m');
 	free_memory_table(hTable);
 	return 0;
 }
+
+
 

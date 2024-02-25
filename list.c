@@ -11,7 +11,6 @@ List* allocate_memory_list() {
   
     return list;
 }
-
 void free_memory_list(List* list) {
     if (!list) {
         return; // Дополнительная проверка на NULL необходима, чтобы избежать ошибки при попытке освободить память, которая не была выделена
@@ -50,7 +49,6 @@ List* push(List* list, ItemMap* data) {
     temp->next = node;
     return list;
 }
-
 void print_list(List* list) {
     if (!list) {
         printf("Error: list is NULL\n");
@@ -85,6 +83,41 @@ void print_list(List* list) {
         default:
             printf("Unknown value data type\n");
             break;
+        }
+        current = current->next;
+    }
+}
+void del(List* list, ItemMap* data) {
+    if (!list) {
+        printf("Error: list is NULL\n");
+        return;
+    }
+    if (!data) {
+        printf("Error: data is NULL\n");
+        return;
+    }
+    List* current = list;
+    if (current->data == data) {
+        list = current->next;
+        free_memory_list(current);
+        return;
+    }
+    while (current->next != NULL && current->next->data != data) {
+        current = current->next;
+    }
+    if (current->next == NULL) {
+        printf("Error: Element not found in list\n");
+        return;
+    }
+    List* curDel = current->next;
+    current->next = curDel->next;
+    free_memory_list(curDel);
+}
+ItemMap* find(List* list, DataType type,ptr key) {
+    List* current = list;
+    while (current != NULL) {
+        if (current->data->key->keyI == key) {
+            return current->data;
         }
         current = current->next;
     }

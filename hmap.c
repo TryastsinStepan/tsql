@@ -116,7 +116,7 @@ void print_elem_by_key(HashTable* hash_table, DataType type, ptr key) {
 		}
 	}
 	else {
-		printf_s("No such item exists");
+		printf_s("No such item exists\n");
 	}
 
 }
@@ -149,24 +149,20 @@ void create_item(HashTable* hash_table, ptr key, DataType type_key, ptr value, D
 }
 ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (!hash_table) {
-		printf("Error: Failed to allocate memory for table\n");
+		fprintf(stderr, "Error: Hash table is NULL\n");
 		return NULL;
 	}
+
 	i32_t index = hash_function(key, type);
 	ItemMap* sItem = hash_table->items[index];
+	List* findl = hash_table->buckets[index];
 	if (sItem != NULL) {
 		if (hash_table->items[index]->key->keyI == key) {
 			return sItem->value->data;
 		}
-		else {
-			 List* l = hash_table->buckets[index];
-			 List* current = l;
-			 while (current!= NULL) {
-					if (l->data->key->keyI == key) {
-						return l->data->value->data;
-					}
-					current = current->next;
-			 }
+		ItemMap* foundItem = find(findl, type, key);
+		if (foundItem != NULL) {
+			return foundItem->value->data;
 		}
 	}
 	return NULL;

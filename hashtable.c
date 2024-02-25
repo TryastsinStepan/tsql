@@ -15,8 +15,6 @@ i32_t hash_function(ptr key, DataType type_key ) {
 	}
 	return index;
 }
-
-
 List** create_buckets() {
 	List** list = (List**)calloc(size_hash_table,sizeof(List*));
 	if (!list) {
@@ -84,9 +82,6 @@ ItemMap* allocate_memory_item_table(ptr key, DataType type_key, ptr value, DataT
 	item->value->data = value;
 	return item;
 }
-
-
-
 ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (!hash_table) {
 		printf("Error: Failed to allocate memory for table\n");
@@ -94,26 +89,18 @@ ItemMap* get_item_by_key(HashTable* hash_table, DataType type, ptr key) {
 	}
 	i32_t index = hash_function(key,type);
 	ItemMap* sItem = hash_table->items[index];
-	if(sItem!=NULL){
+	List* findl = hash_table->buckets[index];
+	if (sItem != NULL) {
 		if (hash_table->items[index]->key->keyI == key) {
-			return sItem;
+			return sItem->value->data;
 		}
-		else {
-			List* l = hash_table->buckets[index];
-			List* current = l;
-			while (current != NULL) {
-				if (l->data->key->keyI == key) {
-					return l->data;
-				}
-				current = current->next;
-			}
+		ItemMap* foundItem = find(findl, type, key);
+		if (foundItem != NULL) {
+			return foundItem->value->data;
 		}
 	}
-
 	return NULL;
 }
-
-
 void free_memory_item(ItemMap* item) {
 	if (!item) {
 		return;

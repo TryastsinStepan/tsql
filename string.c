@@ -51,7 +51,9 @@ void printstr(ptr str) {
         printf("Error: String is NULL\n");
         return;
     }
-    printf("%s\t", (char*)str);
+    MyString* string = str;
+    printf("String: %s\n",(char*) string->str);
+    printf("Size: %d\n", string->size);
 }
 
 void copymystring(ptr first, ptr second) {

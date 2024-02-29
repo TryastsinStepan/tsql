@@ -27,8 +27,8 @@
 //}
 int main(void)
 {
-	MyString* string = createstr(1,INT_TYPE);
-	printstr(string->str);
+	MyString* string = createstr('322', CHAR_TYPE);
+	printstr(string);
 }
 
 

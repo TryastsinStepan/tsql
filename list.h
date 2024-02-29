@@ -14,6 +14,7 @@ typedef struct List {
 	struct List* next;
 	i32_t  count;
 } List;
+
 List* allocate_memory_list();
 void free_memory_list(List* list);
 void free_memory_full_list(List* list);

@@ -27,7 +27,7 @@ HashTable* allocate_memory_table(int size) {
 	if (!memory_table->buckets) {
 		printf("Error: Failed to create buckets\n");
 		free_memory_item(memory_table->items);
-		free_memory_table(memory_table); // îñâîáîäèì ïàìÿòü, âûäåëåííóş äëÿ òàáëèöû
+		free_memory_table(memory_table); 
 		return NULL;
 	}
 	return memory_table;

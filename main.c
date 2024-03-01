@@ -1,4 +1,4 @@
-#include"read_file.h"
+#include"parser.h"
 //int main(void)
 //{
 //	HashTable* hTable= allocate_memory_table(10);
@@ -37,19 +37,13 @@ int main(void)
 	//free_string(nameTable);
 	//free_string(nameCol);
 
-    const char filename[] = "file.txt";
-    char** lines = readFromFile(filename);
-
-    int i = 0;
-	while (lines[i] != NULL) {
-		printf("%s", lines[i]);
-		free(lines[i]);
-		i++;
+	initFile("file.txt");
+	char** line = parseLineByLine();
+	for (int i = 0; i < 5; i++) {
+		printf("%s\n", line[i]);
 	}
-	free(lines);
-
-    return 0;
-
+	freemem(line);
+ 
 
 }
 

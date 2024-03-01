@@ -1,1 +1,5 @@
-Hi! My Name is Dav
+CREATE TABLE Furniture
+(
+ 
+Item VARCHAR(30)
+)

@@ -39,8 +39,8 @@ int main(void)
 
 	initFile("file.txt");
 	char** line = parseLineByLine();
-	for (int i = 0; i < 5; i++) {
-		printf("%s\n", line[i]);
+	for (int i = 0; i < count; i++) {
+		printf("%s", line[i]);
 	}
 	freemem(line);
  

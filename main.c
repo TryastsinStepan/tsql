@@ -29,7 +29,7 @@ int main(void)
 {
 	MyString* nameTable = createstr("Furniture ",STRING_TYPE);
 	MyString* nameCol = createstr("Item ", STRING_TYPE);
-	Table* table = createtsqltable(nameTable, nameCol, 2);
+	Table* table = createtsqltable(nameTable, nameCol,STRING_TYPE, 2);
 	createItem(table, STRING_TYPE,"Chair");
 	print(table);
 	freeTable(table);

@@ -1,6 +1,6 @@
 #include"table.h"
 
-Table* createtsqltable(MyString* name, MyString* nameCol, i32_t count) {
+Table* createtsqltable(MyString* name, MyString* nameCol,DataType typeCol, i32_t count) {
     if (!name) {
         printf("You didn't name the table\n");
         return NULL;
@@ -16,6 +16,7 @@ Table* createtsqltable(MyString* name, MyString* nameCol, i32_t count) {
     }
     table->name = name;
     table->nameCol = nameCol;
+    table->typeCol = typeCol;
     table->item = (ItemTable**)calloc(100, sizeof(ItemTable*));
     if (!table->item) {
         printf("Memory allocation failed\n");
@@ -38,11 +39,11 @@ void createItem(Table* table, DataType type, ptr data) {
         printf("Table capacity exceeded\n");
         return;
     }
-    table->item[index] = initDataType(type, data);
+    table->item[index] = initDataType(table,type, data);
     index++;
 }
 
-ItemTable* initDataType(DataType type, ptr data) {
+ItemTable* initDataType(Table* table,DataType type, ptr data) {
     ItemTable* item = (ItemTable*)malloc(sizeof(ItemTable));
     if (!item) {
         printf("Memory allocation failed\n");
@@ -81,7 +82,8 @@ ItemTable* initDataType(DataType type, ptr data) {
         printf("Unsupported data type\n");
         return NULL;
     }
-    return item;
+    ItemTable* checkItem = comapareDataBetweenDataAndDataInCol(item, table);
+    return checkItem;
 }
 
 void print(Table* table) {
@@ -92,7 +94,7 @@ void print(Table* table) {
     printf("\t\t ------Table------\n");
     for (i32_t i = 0; i < index; i++) {
         if (table->item[i] != NULL) {
-            printf("Table Name: %s, Column Name:%s, Data Name:%s\n",(char*) table->name->str, (char*)table->nameCol->str , (char*)table->item[i]->dataCol);
+            printf("Table:%s,Column:%s,Type:String Data:%s\n",(char*) table->name->str, (char*)table->nameCol->str ,  (char*)table->item[i]->dataCol);
         }
     }
 }
@@ -109,4 +111,12 @@ void freeTable(Table* table) {
     free(table);
     printf("Memory was cleared\n");
     return;
+}
+
+ItemTable* comapareDataBetweenDataAndDataInCol(ItemTable* item, Table* table)
+{
+    if (item->type == table->typeCol) {
+        return item;
+    }
+    return NULL;
 }

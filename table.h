@@ -20,11 +20,14 @@ typedef struct Table {
     MyString* name;
     ItemTable **item;
     MyString* nameCol;
+    DataType typeCol;
+    ptr dataCol;
     i32_t count;
 
 }Table;
-Table* createtsqltable(MyString* name, MyString* nameCol, i32_t count);
+Table* createtsqltable(MyString* name, MyString* nameCol, DataType typeCol, i32_t count);
 void createItem(Table* table, DataType type, ptr data);
-ItemTable* initDataType(DataType type, ptr data);
+ItemTable* initDataType(Table* table,DataType type, ptr data);
 void freeTable(Table* table);
+ItemTable* comapareDataBetweenDataAndDataInCol(ItemTable*  item, Table *table);
 void print(Table* table);

@@ -94,7 +94,7 @@ void print(Table* table) {
     printf("\t\t ------Table------\n");
     for (i32_t i = 0; i < index; i++) {
         if (table->item[i] != NULL) {
-            printf("Table:%s,Column:%s,Type:String Data:%s\n",(char*) table->name->str, (char*)table->nameCol->str ,  (char*)table->item[i]->dataCol);
+            printf("Table:index:%d,%s,Column:%s,Type:String Data:%s\n", i,(char*) table->name->str, (char*)table->nameCol->str ,  (char*)table->item[i]->dataCol);
         }
     }
 }

@@ -30,7 +30,8 @@ int main(void)
 	MyString* nameTable = createstr("Furniture ",STRING_TYPE);
 	MyString* nameCol = createstr("Item ", STRING_TYPE);
 	Table* table = createtsqltable(nameTable, nameCol,STRING_TYPE, 2);
-	createItem(table, STRING_TYPE,"Chair");
+	createItem(table, INT_TYPE,"Chair");
+	createItem(table, STRING_TYPE,"Bad");
 	print(table);
 	freeTable(table);
 	free_string(nameTable);

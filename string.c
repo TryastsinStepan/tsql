@@ -27,7 +27,7 @@ MyString* createstr(ptr str, DataType type) {
         return NULL;
     }
 
-    copymystring(mystr->str, cstring);
+    copymystring(mystr->str, cstring); //mystr->str = cstring;
     mystr->size = len;
     mystr->type = type;
     return mystr;
@@ -56,16 +56,29 @@ void printstr(ptr str) {
     printf("Size: %d\n", string->size);
 }
 
+void free_string(MyString* string)
+{
+    if (!string) {
+        printf("Error: String is NULL\n");
+        return;
+    }
+    free(string->str);
+    free(string);
+}
+
 void copymystring(ptr first, ptr second) {
     char* stringFirst = first;
     char* stringSecond = second;
     if (!stringFirst) {
-        printf("Error: String is NULL\n");
+        printf("Error: First string is NULL\n");
         return;
     }
     if (!stringSecond) {
-        printf("Error: String is NULL\n");
+        printf("Error: Second string is NULL\n");
         return;
     }
-    while ((*stringFirst++ = *stringSecond++) != '\0') {}
+    while (*stringSecond != '\0') {
+        *stringFirst++ = *stringSecond++;
+    }
+    *stringFirst = '\0'; 
 }

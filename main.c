@@ -27,8 +27,14 @@
 
 int main(void)
 {
-	MyString* string = createstr("Item",STRING_TYPE);
-	Table* table = createtsqltable(string, STRING_TYPE, "Chair", 2);
+	MyString* nameTable = createstr("Furniture ",STRING_TYPE);
+	MyString* nameCol = createstr("Item ", STRING_TYPE);
+	Table* table = createtsqltable(nameTable, nameCol, 2);
+	createItem(table, STRING_TYPE,"Chair");
+	print(table);
+	freeTable(table);
+	free_string(nameTable);
+	free_string(nameCol);
 	return 0;
 }
 

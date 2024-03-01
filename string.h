@@ -14,3 +14,4 @@ typedef struct MyString {
  void copymystring(ptr first, ptr second);
  i32_t strlen(ptr str);
  void printstr(ptr str);
+ void free_string(MyString* string);

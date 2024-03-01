@@ -12,16 +12,19 @@
 #include"string.h"
 static i32_t index = 0;
 typedef struct ItemTable {
-    ptr data;
+    ptr dataCol;
     DataType type;
 
 }ItemTable;
 typedef struct Table {
     MyString* name;
     ItemTable **item;
+    MyString* nameCol;
     i32_t count;
 
 }Table;
-Table* createtsqltable(MyString* name, DataType type, ptr data, i32_t size);
+Table* createtsqltable(MyString* name, MyString* nameCol, i32_t count);
 void createItem(Table* table, DataType type, ptr data);
-ItemTable* initDataType(DataType type, ptr data)
+ItemTable* initDataType(DataType type, ptr data);
+void freeTable(Table* table);
+void print(Table* table);

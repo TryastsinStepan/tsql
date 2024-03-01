@@ -1,4 +1,4 @@
-#include "table.h"
+#include"read_file.h"
 //int main(void)
 //{
 //	HashTable* hTable= allocate_memory_table(10);
@@ -27,16 +27,30 @@
 
 int main(void)
 {
-	MyString* nameTable = createstr("Furniture ",STRING_TYPE);
-	MyString* nameCol = createstr("Item ", STRING_TYPE);
-	Table* table = createtsqltable(nameTable, nameCol,STRING_TYPE, 2);
-	createItem(table, INT_TYPE,"Chair");
-	createItem(table, STRING_TYPE,"Bad");
-	print(table);
-	freeTable(table);
-	free_string(nameTable);
-	free_string(nameCol);
-	return 0;
+	//MyString* nameTable = createstr("Furniture ",STRING_TYPE);
+	//MyString* nameCol = createstr("Item ", STRING_TYPE);
+	//Table* table = createtsqltable(nameTable, nameCol,STRING_TYPE, 2);
+	//createItem(table, INT_TYPE,"Chair");
+	//createItem(table, STRING_TYPE,"Bad");
+	//print(table);
+	//freeTable(table);
+	//free_string(nameTable);
+	//free_string(nameCol);
+
+    const char filename[] = "file.txt";
+    char** lines = readFromFile(filename);
+
+    int i = 0;
+	while (lines[i] != NULL) {
+		printf("%s", lines[i]);
+		free(lines[i]);
+		i++;
+	}
+	free(lines);
+
+    return 0;
+
+
 }
 
 

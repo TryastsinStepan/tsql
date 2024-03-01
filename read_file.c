@@ -1,14 +1,14 @@
 #include "read_file.h"
 
 char** readFromFile(char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
+    FILE* file;
+    if (fopen_s(&file, filename, "r") != 0) {
         fprintf(stderr, "Can't open file %s\n", filename);
         exit(1);
     }
 
-    char line[100]; 
-    char** lines = (char**)malloc(1000 * sizeof(char*)); 
+    char line[100];
+    char** lines = (char**)malloc(1000 * sizeof(char*));
     if (lines == NULL) {
         fprintf(stderr, "Memory allocation error\n");
         exit(1);
@@ -21,10 +21,11 @@ char** readFromFile(char* filename) {
             fprintf(stderr, "Memory allocation error\n");
             exit(1);
         }
-        strcpy(lines[i], line);
+        strcpy_s(lines[i], strlen(line) + 1, line);
         i++;
     }
 
     fclose(file);
+    lines[i] = NULL;
     return lines;
 }

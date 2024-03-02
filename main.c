@@ -1,4 +1,4 @@
-#include"parser.h"
+#include"lexer.h"
 //int main(void)
 //{
 //	HashTable* hTable= allocate_memory_table(10);
@@ -36,14 +36,8 @@ int main(void)
 	//freeTable(table);
 	//free_string(nameTable);
 	//free_string(nameCol);
+	lexer();
 
-	initFile("file.txt");
-	char** line = parseLineByLine();
-	for (int i = 0; i < count; i++) {
-		printf("%s", line[i]);
-	}
-	freemem(line);
- 
 
 }
 

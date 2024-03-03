@@ -2,13 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include"IDTAG.h"
+#include "hmap.h"
 #include "parser.h"
-char peek;
-char prev;
 #define WORD_LENGTH 20
+HashTable* table;
 int cont;
 void lexer();
 char** initLine();
 void scan(char** lexme);
 char** allocMemoryLexer();
-void printLexme(char** lexme);
+void initTable();

@@ -28,12 +28,13 @@ void lexer() {
         strcpy_s(lexme[lexmeIndex++], 20, word);
     }
 
-    printLexme(lexme);
+    scan(lexme);
 }
-void printLexme(char** lexme) {
-    for (i32_t i = 0; i < 6; i++)
+void scan(char** lexme) {
+    for (i32_t i = 0; i < count; i++)
     {
-        printf("%s ", lexme[i]);
+        char* prev = lexme[i];
+
     }
 }
 char** initLine()
@@ -55,4 +56,11 @@ char** allocMemoryLexer() {
         }
     }
     return line;
+}
+
+void initTable()
+{
+    table = allocate_memory_table(10);
+    create_item(table,(IDTAG)CREATE,INT_TYPE,"CREATE",STRING_TYPE);
+    create_item(table, (IDTAG)TABLE, INT_TYPE, "TABLE", STRING_TYPE);
 }

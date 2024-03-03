@@ -1,5 +1,4 @@
-CREATE TABLE Furniture
-(
- 
-Item VARCHAR(30)
-)
+                                                                                   CREATE TABLE Furniture
+                                         (
+                Item VARCHAR(30)
+                                                                                    )

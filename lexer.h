@@ -5,7 +5,10 @@
 #include "parser.h"
 char peek;
 char prev;
+#define WORD_LENGTH 20
+int cont;
 void lexer();
 char** initLine();
-void readSym(char sym);
+void scan(char** lexme);
 char** allocMemoryLexer();
+void printLexme(char** lexme);

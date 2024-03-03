@@ -9,17 +9,17 @@ char** parseLineByLine() {
     while (lines[i] != NULL && i < 100) {
         char* str = lines[i];
         int j = 0;
-        int spaceEncountered = 0; // Флаг для отслеживания встречи пробела
+        int spaceEncountered = 1;
         while (*str != '\0') {
             if (*str != ' ') {
                 line[c][j] = *str;
                 j++;
-                spaceEncountered = 0; // Сброс флага, если символ не пробел
+                spaceEncountered = 0;
             }
-            else if (spaceEncountered == 0) { // Если это первый пробел в серии
+            else if (spaceEncountered == 0) {
                 line[c][j] = *str;
                 j++;
-                spaceEncountered = 1; // Установка флага
+                spaceEncountered = 1;
             }
             str++;
         }

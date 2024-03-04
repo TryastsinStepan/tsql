@@ -11,6 +11,8 @@ i32_t hash_function(ptr key, DataType type_key) {
 	case CHAR_TYPE:
 		index = hash_function_char(key, size_hash_table);
 		break;
+	case WORD_TYPE:
+		index = hash_function_word(key, size_hash_table);
 	}
 	return index;
 }
@@ -56,6 +58,7 @@ void handle_collision(HashTable* hash_table, i32_t index, ItemMap* item) {
 		hash_table->buckets[index] = push(l, item);
 	}
 }
+
 ItemMap* allocate_memory_item_table(ptr key, DataType type_key, ptr value, DataType type_value) {
 	ItemMap* item = (ItemMap*)malloc(sizeof(ItemMap));
 	if (!item) {

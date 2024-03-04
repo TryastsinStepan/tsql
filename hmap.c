@@ -39,7 +39,6 @@ void print_all_hash_table(HashTable* table) {
 	}
 	printf("-----------My Hash Table-----------\n");
 	for (i32_t i = 0; i < size_hash_table; i++) {
-
 		ItemMap* item = table->items[i];
 		if (item != NULL) {
 			switch (item->key->type) {
@@ -52,6 +51,11 @@ void print_all_hash_table(HashTable* table) {
 			case CHAR_TYPE:
 				printf("Elem: index: %d, key: %c, ", i, ((char)(item->key->keyI)));
 				break;
+			case WORD_TYPE: {
+				Word* word_ptr = (Word*)(item->key->keyI); 
+				printf("Elem: index: %d, key: %p, ", i, word_ptr);
+				break;
+			}
 			default:
 				printf("No such key exists");
 				break;
@@ -66,6 +70,11 @@ void print_all_hash_table(HashTable* table) {
 			case CHAR_TYPE:
 				printf("value: %c\n", ((char)(item->value->data)));
 				break;
+			case WORD_TYPE: {
+				Word* word_ptr = (Word*)(item->value->data);
+				printf("value: Word(%d ,%s) )\n", (int)word_ptr->id, (char*)word_ptr->lexema);
+				break;
+			}
 			default:
 				printf("No such value exists");
 				break;
@@ -75,7 +84,6 @@ void print_all_hash_table(HashTable* table) {
 		if (bucket != NULL) {
 			printf("Index bucket %d\nList\n", i);
 			print_list(bucket);
-
 		}
 	}
 }
@@ -84,35 +92,44 @@ void print_elem_by_key(HashTable* hash_table, DataType type, ptr key) {
 		printf("Error: Failed to allocate memory for table\n");
 		return;
 	}
+	Word* word_ptr;
 	ItemMap* item = get_item_by_key(hash_table, type, key);
 	if (item != NULL) {
 		switch (item->key->type) {
-		case  INT_TYPE:
-			printf_s("Elem:( key: %d ", ((int)(item->key->keyI)));
-			break;
-		case  STRING_TYPE:
-			printf_s("Elem:( key: %s ", ((char*)(item->key->keyI)));
-			break;
-		case  CHAR_TYPE:
-			printf_s("Elem:( key: %c ", ((char)(item->key->keyI)));
-			break;
-		default:
-			printf_s("No such key exists");
-			break;
-		}
-
-		switch (item->value->type) {
-		case STRING_TYPE:
-			printf("value: %s )\n", ((char*)(item->value->data)));
-			break;
 		case INT_TYPE:
-			printf("value: %d )\n", ((int)(item->value->data)));
+			printf("Elem: key: %d, ",  ((int)(item->key->keyI)));
+			break;
+		case STRING_TYPE:
+			printf("Elem: key: %s, ",  (char*)(item->key->keyI));
 			break;
 		case CHAR_TYPE:
-			printf("value: %c )\n", ((char)(item->value->data)));
+			printf("Elem: key: %c, ",  ((char)(item->key->keyI)));
 			break;
+		case WORD_TYPE: {
+			printf("Elem: key: %p, ", ((Word*)(item->key->keyI)));
+			break;
+		}
 		default:
-			printf_s("No such type exists");
+			printf("No such key exists");
+			break;
+		}
+		switch (item->value->type) {
+		case STRING_TYPE:
+			printf("value: %s\n", (char*)(item->value->data));
+			break;
+		case INT_TYPE:
+			printf("value: %d\n", ((int)(item->value->data)));
+			break;
+		case CHAR_TYPE:
+			printf("value: %c\n", ((char)(item->value->data)));
+			break;
+		case WORD_TYPE: {
+			Word* word_ptr = (Word*)(item->value->data);
+			printf("value: Word(%d ,%s) )\n",(int) word_ptr->id,(char*) word_ptr->lexema);
+			break;
+		}
+		default:
+			printf("No such value exists");
 			break;
 		}
 	}
@@ -193,21 +210,30 @@ void delete_elem(HashTable* hash_table, ptr key, DataType type_key) {
 		return NULL;
 	}
 	i32_t index = hash_function(key, type_key);
+	i32_t flag = 0;
 	ItemMap* sItem = hash_table->items[index];
 	List* l = hash_table->buckets[index];
 	if (sItem != NULL) {
 		if (hash_table->items[index]->key->keyI == key) {
 			free_memory_item(hash_table->items[index]);
 			hash_table->items[index] = NULL;
+			flag = 1;
 			printf("Elem was delete\n");
 		}
+	}
+	if (l != NULL) {
 		if (l->data->key->keyI == key) {
 			ItemMap* delet = l->data;
 			List* save = del(l, delet);
 			hash_table->buckets[index] = NULL;
 			hash_table->buckets[index] = save;
+			flag = 1;
 			printf("Elem was delete\n");
 		}
+	}
+	if (flag) {
 		balance_table(hash_table);
 	}
+	printf("Elem wasnt found\n");
+	return;
 }

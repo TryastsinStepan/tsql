@@ -58,9 +58,3 @@ char** allocMemoryLexer() {
     return line;
 }
 
-void initTable()
-{
-    table = allocate_memory_table(10);
-    create_item(table,(IDTAG)CREATE,INT_TYPE,"CREATE",STRING_TYPE);
-    create_item(table, (IDTAG)TABLE, INT_TYPE, "TABLE", STRING_TYPE);
-}

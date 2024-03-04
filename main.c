@@ -27,17 +27,11 @@
 
 int main(void)
 {
-	//MyString* nameTable = createstr("Furniture ",STRING_TYPE);
-	//MyString* nameCol = createstr("Item ", STRING_TYPE);
-	//Table* table = createtsqltable(nameTable, nameCol,STRING_TYPE, 2);
-	//createItem(table, INT_TYPE,"Chair");
-	//createItem(table, STRING_TYPE,"Bad");
-	//print(table);
-	//freeTable(table);
-	//free_string(nameTable);
-	//free_string(nameCol);
-	lexer();
-
+	Word* word = allocate_memory_for_word(23, "Hello");
+	HashTable* hTable = allocate_memory_table(10);
+	create_item(hTable, word, WORD_TYPE, "Hi", STRING_TYPE);
+	delete_elem(hTable, word, WORD_TYPE);
+	print_all_hash_table(hTable);
 
 }
 

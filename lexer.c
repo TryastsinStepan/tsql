@@ -54,7 +54,7 @@ char** allocMemoryLexer() {
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < 10; i++) {
-        line[i] = (char*)malloc(10 * sizeof(char));
+        line[i] = (char*)malloc(20 * sizeof(char));
         if (line[i] == NULL) {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);

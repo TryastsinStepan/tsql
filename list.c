@@ -2,12 +2,11 @@
 List* allocate_memory_list() {
     List* list = (List*)malloc(sizeof(List));
     if (!list) {
-        printf("Error: Failed to allocate memory for list\n");
+        perror("Error: Failed to allocate memory for list");
         exit(EXIT_FAILURE);
     }
     list->count = 0;
     list->next = NULL;
-
     return list;
 }
 
@@ -16,22 +15,20 @@ void free_memory_list(List* list) {
         return;
     }
     free(list);
-    return;
 }
+
 void free_memory_full_list(List* list) {
     if (!list) {
-        return; 
+        return;
     }
     List* next;
     while (list != NULL) {
         next = list->next;
         free(list);
         list = next;
-        return;
     }
-    free(list);
-    return;
 }
+
 List* push(List* list, ItemMap* data) {
     if (!list) {
         List* head = allocate_memory_list();
@@ -44,7 +41,7 @@ List* push(List* list, ItemMap* data) {
         node->data = data;
         node->next = NULL;
         list->next = node;
-        return;
+        return list;
     }
 
     List* temp = list;
@@ -58,6 +55,7 @@ List* push(List* list, ItemMap* data) {
     temp->next = node;
     return list;
 }
+
 void print_list(List* list) {
     if (!list) {
         printf("Error: list is NULL\n");

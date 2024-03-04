@@ -1,21 +1,22 @@
 ﻿#include"hmap.h"
 HashTable* allocate_memory_table(int size) {
 	if (size <= 0) {
-		printf("Error: Invalid size for memory allocation (%d)\n", size);
+		fprintf(stderr, "Error: Invalid size for memory allocation (%d)\n", size);
 		return NULL;
 	}
 
 	HashTable* memory_table = (HashTable*)malloc(sizeof(HashTable));
 	if (!memory_table) {
-		printf("Error: Failed to allocate memory for table\n");
+		fprintf(stderr, "Error: Failed to allocate memory for table\n");
 		return NULL;
 	}
+
 	size_hash_table = size;
 	memory_table->count = 0;
 
 	memory_table->items = (ItemMap**)calloc(size, sizeof(ItemMap*));
 	if (!memory_table->items) {
-		printf("Error: Failed to allocate memory for item array\n");
+		fprintf(stderr, "Error: Failed to allocate memory for item array\n");
 		free(memory_table);
 		return NULL;
 	}
@@ -23,18 +24,20 @@ HashTable* allocate_memory_table(int size) {
 	for (i32_t i = 0; i < size_hash_table; i++) {
 		memory_table->items[i] = NULL;
 	}
+
 	memory_table->buckets = create_buckets();
 	if (!memory_table->buckets) {
-		printf("Error: Failed to create buckets\n");
+		fprintf(stderr, "Error: Failed to create buckets\n");
 		free_memory_item(memory_table->items);
-		free_memory_table(memory_table); 
+		free_memory_table(memory_table);
 		return NULL;
 	}
+
 	return memory_table;
 }
 void print_all_hash_table(HashTable* table) {
 	if (!table) {
-		printf("Error: Hash table is NULL\n");
+		fprintf(stderr, "Error: Hash table is NULL\n");
 		return;
 	}
 	printf("-----------My Hash Table-----------\n");
@@ -89,7 +92,7 @@ break;
 }
 void print_elem_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (!hash_table) {
-		printf("Error: Failed to allocate memory for table\n");
+		fprintf(stderr, "Error: Hash table is NULL\n");
 		return;
 	}
 	Word* word_ptr;
@@ -139,20 +142,26 @@ void print_elem_by_key(HashTable* hash_table, DataType type, ptr key) {
 
 }
 void create_item(HashTable* hash_table, ptr key, DataType type_key, ptr value, DataType type_value) {
+	if (!hash_table) {
+		fprintf(stderr, "Error: Hash table is NULL\n");
+		return;
+	}
 	if (key == NULL || value == NULL) {
-		printf("Error: Pass the actual parameters\n");
+		fprintf(stderr, "Error: Pass the actual parameters\n");
 		return;
 	}
-	if (hash_table == NULL) {
-		printf("Error: Such hashtable does not exist\n");
-		return;
-	}
-	ItemMap* item = allocate_memory_item_table(key, type_key, value, type_value);
+
 	i32_t index = hash_function(key, type_key);
+	ItemMap* item = allocate_memory_item_table(key, type_key, value, type_value);
+	if (item == NULL) {
+		fprintf(stderr, "Error: Failed to allocate memory for item\n");
+		return;
+	}
+
 	ItemMap* currentItem = hash_table->items[index];
 	if (currentItem == NULL) {
 		if (hash_table->count == size_hash_table) {
-			printf("Error: Hash Table is full\n");
+			fprintf(stderr, "Error: Hash Table is full\n");
 			free_memory_item(currentItem);
 			return;
 		}
@@ -161,9 +170,7 @@ void create_item(HashTable* hash_table, ptr key, DataType type_key, ptr value, D
 	}
 	else {
 		handle_collision(hash_table, index, item);
-		return;
 	}
-	return;
 }
 int castinandfind(DataType type, ptr firstkey, ptr secondkey) {
 switch (type) {
@@ -207,20 +214,18 @@ ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key) {
 		fprintf(stderr, "Error: Hash table is NULL\n");
 		return NULL;
 	}
+
 	i32_t index = hash_function(key, type);
 	ItemMap* findInTableItem = hash_table->items[index];
-	List* findl = hash_table->buckets[index];
-	if (findInTableItem != NULL) {
-		if (castinandfind(type, key, findInTableItem->key->keyI)) {
-			return findInTableItem->value->data;
-		}
+	if (findInTableItem != NULL && castinandfind(type, key, findInTableItem->key->keyI)) {
+		return findInTableItem->value->data;
 	}
-	ItemMap* findItemInBucketItem = find(findl, type, key);
-	if (findItemInBucketItem != NULL) {
-		if (castinandfind(type, key, findItemInBucketItem->key->keyI)) {
-			return findItemInBucketItem->value->data;
-		}
+
+	ItemMap* findItemInBucketItem = find(hash_table->buckets[index], type, key);
+	if (findItemInBucketItem != NULL && castinandfind(type, key, findItemInBucketItem->key->keyI)) {
+		return findItemInBucketItem->value->data;
 	}
+
 	return NULL;
 }
 void free_memory_table(HashTable* memory) {
@@ -245,33 +250,35 @@ void free_memory_table(HashTable* memory) {
 void delete_elem(HashTable* hash_table, ptr key, DataType type_key) {
 	if (!hash_table) {
 		fprintf(stderr, "Error: Hash table is NULL\n");
-		return NULL;
+		return;
 	}
+
 	i32_t index = hash_function(key, type_key);
-	i32_t flag = 0;
+	int flag = 0;
 	ItemMap* sItem = hash_table->items[index];
 	List* l = hash_table->buckets[index];
-	if (sItem != NULL) {
-		if (hash_table->items[index]->key->keyI == key) {
-			free_memory_item(hash_table->items[index]);
-			hash_table->items[index] = NULL;
-			flag = 1;
-			printf("Elem was delete\n");
-		}
+
+	if (sItem != NULL && castinandfind(type_key, key, sItem->key->keyI)) {
+		free_memory_item(hash_table->items[index]);
+		hash_table->items[index] = NULL;
+		flag = 1;
+		printf("Elem was deleted\n");
 	}
-	if (l != NULL) {
-		if (l->data->key->keyI == key) {
-			ItemMap* delet = l->data;
-			List* save = del(l, delet);
-			hash_table->buckets[index] = NULL;
-			hash_table->buckets[index] = save;
-			flag = 1;
-			printf("Elem was delete\n");
-		}
+
+	if (l != NULL && castinandfind(type_key, key, l->data->key->keyI)) {
+		ItemMap* delet = l->data;
+		List* save = del(l, delet);
+		hash_table->buckets[index] = NULL;
+		hash_table->buckets[index] = save;
+		flag = 1;
+		printf("Elem was deleted\n");
 	}
+
 	if (flag) {
 		balance_table(hash_table);
 	}
-	printf("Elem wasnt found\n");
-	return;
+
+	if (!flag) {
+		printf("Elem was not found\n");
+	}
 }

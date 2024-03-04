@@ -126,7 +126,7 @@ List* del(List* list, ItemMap* data) {
 ItemMap* find(List* list, DataType type, ptr key) {
     List* current = list;
     while (current != NULL) {
-        if (current->data->key->keyI == key) {
+        if (strcmp((char*)(current->data->key->keyI), (char*)key) == 0) {
             return current->data;
         }
         current = current->next;

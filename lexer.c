@@ -31,10 +31,15 @@ void lexer() {
     scan(lexme);
 }
 void scan(char** lexme) {
-    for (i32_t i = 0; i < count; i++)
+    initTable();
+    initkKeyWorld();
+    for (i32_t i = 0; i < 2; i++)
     {
         char* prev = lexme[i];
-
+        Word* word = get_value_by_key(table, STRING_TYPE, (char*)prev);
+        if (word) {
+            printf("Token %s\n", word->lexema);
+        }
     }
 }
 char** initLine()
@@ -56,5 +61,16 @@ char** allocMemoryLexer() {
         }
     }
     return line;
+}
+void initTable() {
+    table = allocate_memory_table(2);
+}
+
+void initkKeyWorld() {
+    Word* createkey = allocate_memory_for_word(2,"CREATE");
+    Word* tablekey = allocate_memory_for_word(4,"TABLE");
+    create_item(table, createkey->lexema, STRING_TYPE, createkey, WORD_TYPE);
+    create_item(table, tablekey->lexema, STRING_TYPE, tablekey, WORD_TYPE);
+    return;
 }
 

@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <malloc.h>
 typedef struct Word {
-	Token* id;
+	int id;
 	char* lexema;
 	
 }Word;

@@ -13,3 +13,5 @@ char** initLine();
 void scan(char** lexme);
 char** allocMemoryLexer();
 void initTable();
+void put(Word* word);
+void initkKeyWorld();

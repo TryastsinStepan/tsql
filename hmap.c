@@ -68,8 +68,8 @@ void print_all_hash_table(HashTable* table) {
 				printf("value: %d\n", ((int)(item->value->data)));
 				break;
 			case CHAR_TYPE:
-				printf("value: %c\n", ((char)(item->value->data)));
-				break;
+printf("value: %c\n", ((char)(item->value->data)));
+break;
 			case WORD_TYPE: {
 				Word* word_ptr = (Word*)(item->value->data);
 				printf("value: Word(%d ,%s) )\n", (int)word_ptr->id, (char*)word_ptr->lexema);
@@ -97,13 +97,13 @@ void print_elem_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (item != NULL) {
 		switch (item->key->type) {
 		case INT_TYPE:
-			printf("Elem: key: %d, ",  ((int)(item->key->keyI)));
+			printf("Elem: key: %d, ", ((int)(item->key->keyI)));
 			break;
 		case STRING_TYPE:
-			printf("Elem: key: %s, ",  (char*)(item->key->keyI));
+			printf("Elem: key: %s, ", (char*)(item->key->keyI));
 			break;
 		case CHAR_TYPE:
-			printf("Elem: key: %c, ",  ((char)(item->key->keyI)));
+			printf("Elem: key: %c, ", ((char)(item->key->keyI)));
 			break;
 		case WORD_TYPE: {
 			printf("Elem: key: %p, ", ((Word*)(item->key->keyI)));
@@ -125,7 +125,7 @@ void print_elem_by_key(HashTable* hash_table, DataType type, ptr key) {
 			break;
 		case WORD_TYPE: {
 			Word* word_ptr = (Word*)(item->value->data);
-			printf("value: Word(%d ,%s) )\n",(int) word_ptr->id,(char*) word_ptr->lexema);
+			printf("value: Word(%d ,%s) )\n", (int)word_ptr->id, (char*)word_ptr->lexema);
 			break;
 		}
 		default:
@@ -165,22 +165,60 @@ void create_item(HashTable* hash_table, ptr key, DataType type_key, ptr value, D
 	}
 	return;
 }
+int castinandfind(DataType type, ptr firstkey, ptr secondkey) {
+	    switch (type) {
+	case STRING_TYPE: {
+		char* fkey = (char*)firstkey;
+		char* skey = (char*)secondkey;
+		if (strcmp(fkey, skey) == 0) {
+			return 1;
+		}
+		break;
+	}
+	case INT_TYPE: {
+		int fkey = (int)firstkey;
+		int skey = (int)secondkey;
+		if (fkey == skey) {
+			return 1;
+		}
+		break;
+	}
+	case CHAR_TYPE: {
+		char* fkey = (char*)firstkey;
+		char* skey = (char*)secondkey;
+		if (strcmp(fkey, skey) == 0) {
+			return 1;
+		}
+		break;
+	}
+	case WORD_TYPE: {
+		Word* fkey = (Word*)firstkey;
+		Word* skey = (Word*)secondkey;
+		if (fkey->id == skey->id && strcmp(fkey->lexema, skey->lexema) == 0) {
+			return 1;
+		}
+		break;
+	}
+        }
+return 0;
+}
 ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key) {
 	if (!hash_table) {
 		fprintf(stderr, "Error: Hash table is NULL\n");
 		return NULL;
 	}
-
 	i32_t index = hash_function(key, type);
-	ItemMap* sItem = hash_table->items[index];
+	ItemMap* findInTableItem = hash_table->items[index];
 	List* findl = hash_table->buckets[index];
-	if (sItem != NULL) {
-		if (hash_table->items[index]->key->keyI == key) {
-			return sItem->value->data;
+	if (findInTableItem != NULL) {
+		if (castinandfind(type, key, findInTableItem->key->keyI)) {
+			return findInTableItem->value->data;
 		}
-		ItemMap* foundItem = find(findl, type, key);
-		if (foundItem != NULL) {
-			return foundItem->value->data;
+	}
+	ItemMap* findItemInBucketItem = find(findl, type, key);
+	if (findItemInBucketItem != NULL) {
+		if (castinandfind(type, key, findItemInBucketItem->key)) {
+			return findItemInBucketItem->value->data;
 		}
 	}
 	return NULL;

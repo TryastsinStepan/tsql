@@ -27,12 +27,7 @@
 
 int main(void)
 {
-	Word* word = allocate_memory_for_word(23, "Hello");
-	HashTable* hTable = allocate_memory_table(10);
-	create_item(hTable, word, WORD_TYPE, "Hi", STRING_TYPE);
-	delete_elem(hTable, word, WORD_TYPE);
-	print_all_hash_table(hTable);
-
+	lexer();
 }
 
 

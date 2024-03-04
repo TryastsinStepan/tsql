@@ -123,10 +123,47 @@ List* del(List* list, ItemMap* data) {
     }
     return list;
 }
+int findoftype(DataType type, ptr firstkey, ptr secondkey) {
+    switch (type) {
+    case STRING_TYPE: {
+        char* fkey = (char*)firstkey;
+        char* skey = (char*)secondkey;
+        if (strcmp(fkey, skey) == 0) {
+            return 1;
+        }
+        break;
+    }
+    case INT_TYPE: {
+        int fkey = (int)firstkey;
+        int skey = (int)secondkey;
+        if (fkey == skey) {
+            return 1;
+        }
+        break;
+    }
+    case CHAR_TYPE: {
+        char* fkey = (char*)firstkey;
+        char* skey = (char*)secondkey;
+        if (strcmp(fkey, skey) == 0) {
+            return 1;
+        }
+        break;
+    }
+    case WORD_TYPE: {
+        Word* fkey = (Word*)firstkey;
+        Word* skey = (Word*)secondkey;
+        if (fkey->id == skey->id && strcmp(fkey->lexema, skey->lexema) == 0) {
+            return 1;
+        }
+        break;
+    }
+    }
+    return 0;
+}
 ItemMap* find(List* list, DataType type, ptr key) {
     List* current = list;
     while (current != NULL) {
-        if (strcmp((char*)(current->data->key->keyI), (char*)key) == 0) {
+        if (findoftype(type, key, current->data->key->keyI)) {
             return current->data;
         }
         current = current->next;

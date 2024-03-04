@@ -1,6 +1,7 @@
 #pragma once
 #include "utils.h"
 #include "strucrt.h"
+#include"word.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>

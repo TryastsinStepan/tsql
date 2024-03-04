@@ -166,7 +166,7 @@ void create_item(HashTable* hash_table, ptr key, DataType type_key, ptr value, D
 	return;
 }
 int castinandfind(DataType type, ptr firstkey, ptr secondkey) {
-	    switch (type) {
+switch (type) {
 	case STRING_TYPE: {
 		char* fkey = (char*)firstkey;
 		char* skey = (char*)secondkey;
@@ -199,7 +199,7 @@ int castinandfind(DataType type, ptr firstkey, ptr secondkey) {
 		}
 		break;
 	}
-        }
+}
 return 0;
 }
 ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key) {
@@ -217,7 +217,7 @@ ptr get_value_by_key(HashTable* hash_table, DataType type, ptr key) {
 	}
 	ItemMap* findItemInBucketItem = find(findl, type, key);
 	if (findItemInBucketItem != NULL) {
-		if (castinandfind(type, key, findItemInBucketItem->key)) {
+		if (castinandfind(type, key, findItemInBucketItem->key->keyI)) {
 			return findItemInBucketItem->value->data;
 		}
 	}

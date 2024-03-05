@@ -13,6 +13,7 @@ void lexer() {
                 word[wordIndex] = '\0'; 
                 strcpy_s(lexme[lexmeIndex++], 20, word);
                 wordIndex = 0; 
+                cont++;
             }
             else if (wordIndex < sizeof(word) - 1) {
                 word[wordIndex++] = ch; 
@@ -30,15 +31,27 @@ void lexer() {
 
     scan(lexme);
 }
+Word* analisetoken(char* token) {
+    Word* word = get_value_by_key(table, STRING_TYPE, (char*)token);
+    if (!word) {
+        Word* nword = allocate_memory_for_word(ID, token);
+        create_item(table, token, STRING_TYPE, nword, WORD_TYPE);
+        return get_value_by_key(table, STRING_TYPE, (char*)token);
+    }
+    else {
+        return word;
+    }
+}
 void scan(char** lexme) {
     initTable();
     initkKeyWorld();
-    for (i32_t i = 0; i < 2; i++)
+    for (i32_t i = 0; i <= cont; i++)
     {
         char* prev = lexme[i];
-        Word* word = get_value_by_key(table, STRING_TYPE, (char*)prev);
+
+        Word* word = analisetoken(prev);
         if (word) {
-            printf("Token %s\n", word->lexema);
+            printf("Token (id,name)( %d , %s )\n",word->id, word->lexema);
         }
     }
 }
@@ -67,10 +80,15 @@ void initTable() {
 }
 
 void initkKeyWorld() {
-    Word* createkey = allocate_memory_for_word(2,"CREATE");
-    Word* tablekey = allocate_memory_for_word(4,"TABLE");
+    Word* createkey = allocate_memory_for_word(CREATE,"CREATE");
+    Word* tablekey = allocate_memory_for_word(TABLE,"TABLE");
+    Word* chartype = allocate_memory_for_word(VARCHAR, "VARCHAR");
+    Word* openbracket = allocate_memory_for_word(OPPENNINGBRACKET, "(");
+    Word* closebracket = allocate_memory_for_word(CLOSEBRACKET, ")");
     create_item(table, createkey->lexema, STRING_TYPE, createkey, WORD_TYPE);
     create_item(table, tablekey->lexema, STRING_TYPE, tablekey, WORD_TYPE);
-    return;
+    create_item(table, chartype->lexema, STRING_TYPE, chartype, WORD_TYPE);
+    create_item(table, openbracket->lexema, STRING_TYPE, openbracket, WORD_TYPE);
+    create_item(table, closebracket->lexema, STRING_TYPE, closebracket, WORD_TYPE);
 }
 

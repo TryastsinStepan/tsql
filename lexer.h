@@ -15,3 +15,4 @@ char** allocMemoryLexer();
 void initTable();
 void put(Word* word);
 void initkKeyWorld();
+void findKeyWorld();

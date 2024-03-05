@@ -1,17 +1,17 @@
 #include"table.h"
 
-Table* createtsqltable(MyString* name, MyString* nameCol,DataType typeCol, i32_t count) {
+Table* createtsqltable(MyString* name, MyString* nameCol, DataType typeCol, i32_t count) {
     if (!name) {
-        printf("You didn't name the table\n");
+        printf("Error: Table name is not provided\n");
         return NULL;
     }
     if (!nameCol) {
-        printf("You didn't name the column\n");
+        printf("Error: Column name is not provided\n");
         return NULL;
     }
     Table* table = (Table*)malloc(sizeof(Table));
     if (!table) {
-        printf("Memory allocation failed\n");
+        printf("Error: Memory allocation failed for table\n");
         return NULL;
     }
     table->name = name;
@@ -19,7 +19,7 @@ Table* createtsqltable(MyString* name, MyString* nameCol,DataType typeCol, i32_t
     table->typeCol = typeCol;
     table->item = (ItemTable**)calloc(100, sizeof(ItemTable*));
     if (!table->item) {
-        printf("Memory allocation failed\n");
+        printf("Error: Memory allocation failed for table items\n");
         free(table);
         return NULL;
     }
@@ -32,16 +32,17 @@ Table* createtsqltable(MyString* name, MyString* nameCol,DataType typeCol, i32_t
 
 void createItem(Table* table, DataType type, ptr data) {
     if (!table) {
-        printf("Table is not initialized\n");
+        printf("Error: Table is not initialized\n");
         return;
     }
     if (index >= 100) {
-        printf("Table capacity exceeded\n");
+        printf("Error: Table capacity exceeded\n");
         return;
     }
-    table->item[index] = initDataType(table,type, data);
+    table->item[index] = initDataType(table, type, data);
     index++;
 }
+
 
 ItemTable* initDataType(Table* table,DataType type, ptr data) {
     ItemTable* item = (ItemTable*)malloc(sizeof(ItemTable));

@@ -33,13 +33,13 @@ char** parseLineByLine() {
 }
 
 char** allocMemory() {
-    char** line = (char**)malloc(100 * sizeof(char*)); 
+    char** line = (char**)malloc(100 * sizeof(char*));
     if (line == NULL) {
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < 100; i++) {
-        line[i] = (char*)malloc(100 * sizeof(char)); 
+        line[i] = (char*)malloc(100 * sizeof(char));
         if (line[i] == NULL) {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);
@@ -48,7 +48,7 @@ char** allocMemory() {
     return line;
 }
 
-void initFile(char *file)
+void initFile(char* file)
 {
     fileread = readFromFile(file);
 }
